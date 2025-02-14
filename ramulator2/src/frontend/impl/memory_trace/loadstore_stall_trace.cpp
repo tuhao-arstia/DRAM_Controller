@@ -38,6 +38,11 @@ namespace Ramulator
       return;
     }
 
+    if(this->is_finished() || (m_curr_trace_idx > m_trace_length)) // If the core finish executing all the traces, it no longer needs to send request
+    {
+      return;
+    }
+
     // Send another request
     const Trace &t = m_trace[m_curr_trace_idx];
 
@@ -48,11 +53,11 @@ namespace Ramulator
 
     if (request_sent)
     {
-      if (t.is_write == false) // Stall only if the request is false
+      if (t.is_write == false) // Stall only if the request is a read, since it is waiting for the request
         m_waiting_for_request = true;
 
       m_current_stall_cycles = t.stall_cycles;
-      m_curr_trace_idx = (m_curr_trace_idx + 1) % m_trace_length;
+      m_curr_trace_idx++;
       m_trace_count++;
     }
   };
@@ -137,5 +142,9 @@ namespace Ramulator
   };
 
   // TODO: FIXME
-  bool LoadStoreStallCore::is_finished() { return m_num_retired_traces>=m_num_expected_traces; };
+  bool LoadStoreStallCore::is_finished()
+    {
+      return (m_num_retired_traces>=m_num_expected_traces) || (m_curr_trace_idx >= m_trace_length);
+
+    };
 }; // namespace Ramulator

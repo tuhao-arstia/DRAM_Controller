@@ -67,8 +67,12 @@ public:
   bool send(Request req) override {
     m_addr_mapper->apply(req);
     int channel_id = req.addr_vec[0];
-    bool is_success = m_controllers[channel_id]->send(
-        req); // Sends the request to the controller
+    // To debug: For test Case 1 @ core 36 to 1 channel, the core_id 36 is never served, never a success
+    // Since core_id 36 is never served, the simulation would never completes.
+    // 1. Why other cores still keep simulating even if the core_id 36 is never served?
+    // 2. Why core_id 36 is never served?
+    bool is_success = m_controllers[channel_id]->send(req); // Sends the request to the controller
+
 
     if (is_success) {
       switch (req.type_id) {

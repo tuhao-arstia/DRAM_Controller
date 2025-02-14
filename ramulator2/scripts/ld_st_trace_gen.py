@@ -10,7 +10,7 @@ def generate_st_ld_trace(filename,filename2,pattern_type,num_lines,gen_stall,loa
     # operation = random.choice(['ST', 'LD'])
     operation = 'LD'
     # generate marching pattern for it, increment the address
-    num_of_channels = 1
+    num_of_channels = 64
     row_size = 2**16    # 64K rows due to 1Gb of memory
     colmun_size = 2**14 # 2K Bytes 2**11 * 2**3
     data_channel_size = 1024 # IO channel siz
@@ -71,13 +71,18 @@ def generate_st_ld_trace(filename,filename2,pattern_type,num_lines,gen_stall,loa
                 # Make it a walking pattern
                 gen_column_bits = 0
                 gen_byte_bits   = 0
-
+            elif(pattern_type=='ideal_sequential_gen_channel'):
+                gen_channel_num = line % num_of_channels
+                gen_row_bits    = 0
+                gen_column_bits = 0
+                gen_byte_bits   = 0
             else: #Ideal sequential
-                gen_channel_num = 0
+                gen_channel_num = 1
                 gen_row_bits    = (line // column_partitions) % row_size
                 # Walking pattern
                 gen_column_bits = line % column_partitions
                 gen_byte_bits   = 0
+
 
             address = (gen_channel_num << (row_bits + column_bits + word_bits)) | (gen_row_bits << (column_bits + word_bits)) | (gen_column_bits << word_bits) | gen_byte_bits
             # Generate the walking column pattern from col 0~ col100
@@ -95,8 +100,8 @@ def generate_st_ld_trace(filename,filename2,pattern_type,num_lines,gen_stall,loa
                 file2.write("{0} {1} {2} {3}\n".format(gen_channel_num,gen_row_bits,gen_column_bits,gen_byte_bits))
 
 # Parameters
-num_traces = 1
-num_lines = 200000
+num_traces = 64
+num_lines = 2000
 trace_file_dir = "../traces/"
 gen_stall = True
 pattern_type = ''
@@ -105,7 +110,7 @@ load_store_switch_threshold = 100000
 random.seed(0)
 
 for i in range(num_traces):
-    for no_of_types in range(0,4):
+    for no_of_types in range(0,5):
         if no_of_types == 0:
             pattern_type = 'worst_case'
         elif no_of_types == 1:
@@ -114,6 +119,8 @@ for i in range(num_traces):
             pattern_type = 'ideal_sequential'
         elif no_of_types == 3:
             pattern_type = 'read_write_interleave_same_row'
+        elif no_of_types == 4:
+            pattern_type = 'ideal_sequential_gen_channel'
 
         filename = f"{trace_file_dir}_{pattern_type}_trace_{i}.txt"
         filename2 = f"{trace_file_dir}_{pattern_type}_trace_{i}_address.txt"

@@ -6,7 +6,7 @@
             "request": "launch",
             "program": "${workspaceFolder}/build/ramulator2",
             // "args": ["-f","${workspaceFolder}/config_files/test/testing_pattern_config.yaml"],
-            "args": ["-f","${workspaceFolder}/config_files/test/testing_in_order_ld_st_stall_read_write_interleave.yaml"],
+            "args": ["-f","/home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/testing_in_order_ld_st_stall_ideal_debug.yaml"],
             "stopAtEntry": true,
             "cwd": "${workspaceFolder}",
             "environment": [],
