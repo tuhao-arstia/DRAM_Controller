@@ -83,16 +83,12 @@
 time paramemters
 *****************************************/
 //`define CLK_DEFINE 2000 //3000ps
-`define CLK_DEFINE 1 //1ns
+`define CLK_DEFINE 1 //3ns
 
-//Initialization timings
-`define POWER_UP_200US_DELAY 250000// 200us/1ns
-`define RESET_PROCEDURE_500US_DELAY 500000 // 500us/1ns
-`define WAIT_TXPR_DELAY 243 // 243ns/1ns = 243
-`define tMRD_DELAY 27  //tMRD = 27 ns / 1ns = 27
-`define WAIT_TDLLK_DELAY 1536 // 1536ns/1ns = 1536
-
-// READ/WRITE scheduling timings constraints
+//define latency cycles
+`define CYCLE_TXPR 81       //tXPR = 81 cycles = 81*3 = 243ns, 
+`define CYCLE_TMRD 9        //tMRD = 4 cycles   (4-1) * 3 <- LMR0~LMR3 total waiting time
+`define CYCLE_TDLLK 512     //tDLLK = 512 cycles
 `define CYCLE_TRCD 4  //tRCD = 5 cycles, new timing 11000(ps) / 3000(ps) = 4
 `define CYCLE_TRC  8 //tRC = 17 cycles, new timing 23000(ps) / 3000(ps) = 8
 `define CYCLE_TCCD 4  //tCCD = 4 cycles, same
@@ -113,15 +109,13 @@ time paramemters
 
 `define CYCLE_TWTR  4 //write to read command latency : round((7500ps/3000ps))=3
 `define CYCLE_TRTW  `CYCLE_TOTAL_RL+`CYCLE_TCCD+2-(`CYCLE_TOTAL_WL)
-                     //read to write command latency : RL + tCCD + 2*tCK - Initialization timings
-//define latency cycles
-`define WAIT_TXPR_DELAY 81
-`define tMRD_DELAY 9  //tMRD = 4 cycles   (4-1) * 3 <- LMR0~LMR3 total waiting time
-`define WAIT_TDLLK_DELAY 512
-`define RESET_PROCEDURE_500US_DELAY 35
-    ine TZQ_INIT_DELAY  512
+                     //read to write command latency : RL + tCCD + 2*tCK - WL
 
-// READ/WRITE scheduling timings constraints
+/*
+//define latency cycles
+`define CYCLE_TXPR 81
+`define CYCLE_TMRD 9  //tMRD = 4 cycles   (4-1) * 3 <- LMR0~LMR3 total waiting time
+`define CYCLE_TDLLK 512
 `define CYCLE_TRCD 9  //tRCD = 9 cycles
 `define CYCLE_TRC  33 //tRC = 33 cycles
 `define CYCLE_TCCD 4  //tCCD = 4 cycles
@@ -193,16 +187,20 @@ time paramemters
 `define MR3_CONFIG 0     // set by default
 //------------------------------------------------------------
 
-
 /*******************************************************
 bit width definations
 ********************************************************/
 `define DM_BITS    2
 `define BA_BITS    3
-`define ADDR_BITS  14
+
+`define ROW_ADDR_BITS 16
+`define COL_ADDR_BITS 4
+`define BANK_ADDR_BITS 2
+
 `define DQ_BITS    128
 `define DQS_BITS   2
-
+`define FRONTEND_WORD_SIZE  256
+`define BACKEND_WORD_SIZE   FRONTEND_WORD_SIZE*4
 
 // Schedule command defination, the physical IO FSM controlled by current bank state and counters
 `define ATCMD_NOP        4'd0

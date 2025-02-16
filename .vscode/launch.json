@@ -6,7 +6,7 @@
       "type": "cppdbg",
       "request": "launch",
       "args": [],
-      "stopAtEntry": false,
+      "stopAtEntry": true,
       "externalConsole": true,
       "cwd": "c:/Users/kevin/Desktop/Senior_3D_DRAM/ramulator2/src/frontend/impl/memory_trace",
       "program": "c:/Users/kevin/Desktop/Senior_3D_DRAM/ramulator2/src/frontend/impl/memory_trace/build/Debug/outDebug",

@@ -56,5 +56,5 @@
   "C_Cpp_Runner.showCompilationTime": false,
   "C_Cpp_Runner.useLinkTimeOptimization": false,
   "C_Cpp_Runner.msvcSecureNoWarnings": false,
-  "cmake.sourceDirectory": "/home/sicajc/user/Senior_3D_DRAM/ramulator2"
+  "cmake.sourceDirectory": "/home/sicajc/user/Master_Thesis_MC/ramulator2/src/example"
 }

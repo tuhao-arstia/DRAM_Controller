@@ -848,7 +848,7 @@ end
 
 
 //pad_rw
-always@(negedge clk)
+always@(negedge clk) // This needs the waveform to imaging
 begin: DRAM_PHY_RW
 case(d_state_nxt)
   `D_READ1   : ddr3_rw <= 1 ;

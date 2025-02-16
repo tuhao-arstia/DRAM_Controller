@@ -14,11 +14,14 @@
 `define DEPTH 32
 `include "userType_pkg.sv"
 
-module issue_FIFO( clk,
+module issue_FIFO( 
+                   // Data in
+                   clk,
                    rst_n,
                    wen,
                    data_in,
                    ren,
+                   // Data out
                    data_out,
                    data_out_pre,
                    full,

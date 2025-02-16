@@ -13,6 +13,7 @@
 `define  CMD_DESELECT       5'b11111
 `define  CMD_POWER_DOWN     5'b01111
 `define  CMD_SELF_REFLESH	  5'b00001
+`define  CMD_RESET          5'b01111
 
 
 //command state naming
@@ -198,6 +199,11 @@ bit width definations
 `define DQ_BITS    128
 `define DQS_BITS   2
 
+`define BANK_STATE_WIDTH 3
+`define ROW_ADDR_WIDTH   14
+`define RW_CONTROL_WIDTH 2
+`define DATA_WIDTH       128
+`define IO_CNT_WIDTH     4
 
 // Schedule command defination, the physical IO FSM controlled by current bank state and counters
 `define ATCMD_NOP        4'd0

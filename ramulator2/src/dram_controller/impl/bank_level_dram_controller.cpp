@@ -12,7 +12,7 @@ class BankLevelDRAMController final : public IDRAMController,
                                     public Implementation {
   //
   RAMULATOR_REGISTER_IMPLEMENTATION(IDRAMController, BankLevelDRAMController,
-                                    "Generic", "A generic DRAM controller.");
+                                    "BankLevelController", "A generic DRAM controller.");
 
 private:
   std::deque<Request> pending; // A queue for read requests that are about to
