@@ -53,7 +53,9 @@ package command_definition_pkg;
         CMD_MRS        = 4'd9,
         CMD_RESET      = 4'd10,
         CMD_LOAD_MODE  = 4'd11,
-        CMD_ZQ_CALIBRATION = 4'd12
+        CMD_ZQ_CALIBRATION = 4'd12,
+        CMD_WRA       = 4'd13,
+        CMD_RDA       = 4'd14
     } command_t;
 
     //burst length

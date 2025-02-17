@@ -29,6 +29,7 @@ module phy_layer (
     input   [1:0]     i_mode_register_num,
     input   logic [`BANK_STATE_WIDTH-1:0] i_current_bank_addr, // Current bank address
     input   logic [`ROW_ADDR_WIDTH-1:0] i_activated_row_addr,   // Activated row address
+    input   logic [`COL_ADDR_BITS-1:0]  i_activated_col_addr,   // Activated column address
 
     // Interface with data controls
     input   logic [`RW_CONTROL_WIDTH-1:0] i_rw_control_state,   // Read/Write control state
@@ -80,6 +81,7 @@ always@(negedge clk1) begin: DRAM_PHY_CK_CS_RAS_CAS_WE
 end
 
 always@(negedge clk1) begin: DRAM_PHY_ADDR
+    // Note that some commands requires the control using addr bits
     case(i_command)
         CMD_POWER_UP : addr <= 16'h0000; // Example address for power up
         CMD_ZQCAL    : addr <= 1024;     // A10 = 1 for ZQ calibration
@@ -91,6 +93,31 @@ always@(negedge clk1) begin: DRAM_PHY_ADDR
                 3 : addr <= MR3;      // Load mode register 0
             endcase
         CMD_RESET    : addr <= 16'h0000; // Example address for reset
+
+        // Thus when giving address it is seperated into row and column address, also A10 is used
+        // for precharges
+        CMD_ACTIVE   : addr <= i_activated_row_addr; // Activate row address
+        CMD_READ     : begin
+            addr[9] <= 0; // A10 = 0 for read 
+            addr[8:0] <= i_activated_col_addr; // Read  column address
+        end
+        CMD_WRITE    : begin 
+            addr[9] <= 0; // A10 = 0 for write
+            addr[8:0] <= i_activated_col_addr; // Write column address
+        end
+        CMD_PRECHARGE: 
+        begin
+            addr[9] <= 1; // A10 = 1 for precharge 
+            addr[8:0] <= 0;    // Precharge bank address, since we have only 1 bank
+        end
+        CMD_WRA:begin
+            addr[9] <= 1; // A10 = 0 for write
+            addr[8:0] <= i_activated_col_addr; // Write column address
+        end
+        CMD_RDA:begin
+            addr[9] <= 1; // A10 = 0 for write
+            addr[8:0] <= i_activated_col_addr; // Write column address
+        end
 
         // FSM_ACTIVE   : addr <= act_addr;
         // FSM_READ     : addr <= act_addr;

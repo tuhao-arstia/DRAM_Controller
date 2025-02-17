@@ -12,8 +12,10 @@
 `define  CMD_NOP            5'b10111
 `define  CMD_DESELECT       5'b11111
 `define  CMD_POWER_DOWN     5'b01111
-`define  CMD_SELF_REFLESH	  5'b00001
+`define  CMD_SELF_REFLESH	5'b00001
 `define  CMD_RESET          5'b01111
+`define  CMD_WRA            5'b10100 // Difference in A10 than WRITE
+`define  CMD_RDA            5'b10101 // Difference in A10 than READ
 
 
 //command state naming
