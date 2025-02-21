@@ -83,12 +83,13 @@
 time paramemters
 *****************************************/
 //`define CLK_DEFINE 2000 //3000ps
-`define CLK_DEFINE 1 //3ns
+`define CLK_DEFINE 3 //3ns
 
 //define latency cycles
-`define CYCLE_TXPR 81       //tXPR = 81 cycles = 81*3 = 243ns, 
-`define CYCLE_TMRD 9        //tMRD = 4 cycles   (4-1) * 3 <- LMR0~LMR3 total waiting time
-`define CYCLE_TDLLK 512     //tDLLK = 512 cycles
+`define POWER_UP_LATENCY 14
+`define CYCLE_TXPR 81
+`define CYCLE_TMRD 9  //tMRD = 4 cycles   (4-1) * 3 <- LMR0~LMR3 total waiting time
+`define CYCLE_TDLLK 512
 `define CYCLE_TRCD 4  //tRCD = 5 cycles, new timing 11000(ps) / 3000(ps) = 4
 `define CYCLE_TRC  8 //tRC = 17 cycles, new timing 23000(ps) / 3000(ps) = 8
 `define CYCLE_TCCD 4  //tCCD = 4 cycles, same
@@ -193,9 +194,15 @@ bit width definations
 ********************************************************/
 `define DM_BITS    2
 `define BA_BITS    3
-`define ADDR_BITS  14
+`define ADDR_BITS  20
 `define DQ_BITS    128
 `define DQS_BITS   2
+`define ROW_BITS   16
+`define COL_BITS   4
+
+`define USER_COMMAND_BITS 31
+`define MEM_CTR_COMMAND_BITS 29
+
 
 
 // Schedule command defination, the physical IO FSM controlled by current bank state and counters

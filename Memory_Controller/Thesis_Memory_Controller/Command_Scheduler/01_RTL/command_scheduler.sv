@@ -28,6 +28,7 @@ module command_scheduler (
     output logic [2:0] o_mode_register_num_ff,
     output logic [`BA_BITS-1:0] o_bank_address_ff,
     output logic [`ROW_ADDR_WIDTH-1:0] o_activated_row_address_ff,
+    output logic [`COL_ADDR_WIDTH-1:0] o_col_address_ff,
     
     // DATA CHANNEL FROM PHY
     output rw_control_state_t o_data_type,
@@ -58,7 +59,6 @@ module command_scheduler (
         FSM_REFRESH = 4'd14,
         FSM_WAIT_TWR = 4'd15
     }cmd_sch_fsm_state_t;
-
 
     cmd_sch_fsm_state_t cmd_sch_fsm_state;
     cmd_sch_fsm_state_t previous_cmd_state;
@@ -513,14 +513,12 @@ module command_scheduler (
         end
     end
 
-    //refresh counter + WUPR
+    //Refresh counter tracking for refresh timing
 
 
-    //
-
-    //======================================
+    //=======================================================
     //         DATA RETURN CHANNEL
-    //======================================
+    //=======================================================
 
 endmodule
 

@@ -12,16 +12,12 @@
 
 `define COUNTER_WIDTH 5
 `define DEPTH 32
-`include "userType_pkg.sv"
 
-module issue_FIFO( 
-                   // Data in
-                   clk,
+module issue_FIFO( clk,
                    rst_n,
                    wen,
                    data_in,
                    ren,
-                   // Data out
                    data_out,
                    data_out_pre,
                    full,
@@ -29,26 +25,29 @@ module issue_FIFO(
                    empty
                    );
 
+typedef struct packed {
+  sch_cmd_t command;
+  logic[`COL_BITS+`ROW_BITS-1:0] addr;
+  logic[`BA_BITS-1:0] bank;
+} issue_fifo_cmd_in_t;
+
+localparam  ISSUE_FIFO_WIDTH=  $bits(issue_fifo_cmd_in_t);
+
 input clk ;
 input rst_n ;
 input wen ;
-input [`ISU_FIFO_WIDTH-1:0]data_in ; //{command , addr , bank} [20:17]   [16:3] [2:0]
+input [ISSUE_FIFO_WIDTH-1:0]data_in ; //{command , addr , bank} [20:17]   [16:3] [2:0]
 input ren ;
 
 
-output [`ISU_FIFO_WIDTH-1:0]data_out;
-output [`ISU_FIFO_WIDTH-1:0]data_out_pre;
+output [ISSUE_FIFO_WIDTH-1:0]data_out;
+output [ISSUE_FIFO_WIDTH-1:0]data_out_pre;
 output full;
 output virtual_full;
 output empty;
 
-import userType_pkg::*;
+import usertype::*;
 
-typedef struct packed {
-  sch_cmd_t command;
-  logic[13:0] addr;
-  logic[2:0] bank;
-} issue_fifo_cmd_in_t;
 
 reg write_en ;
 reg empty;

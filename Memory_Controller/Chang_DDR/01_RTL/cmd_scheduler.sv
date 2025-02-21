@@ -10,7 +10,7 @@
 ////////////////////////////////////////////////////////////////////////
 
 `define B_COUNTER_WIDTH 8
-`include "userType_pkg.sv"
+`include "Usertype.sv"
 
 module cmd_scheduler(
                          clk,
@@ -47,7 +47,7 @@ output ba3_stall;
 output [`ISU_FIFO_WIDTH-1:0]sch_out ;
 output sch_issue ;
 
-import userType_pkg::*;
+import usertype::*;
 
 reg ba0_stall;
 reg ba1_stall;

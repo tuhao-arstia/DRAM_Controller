@@ -8,7 +8,7 @@
 // Revision History:
 // Date        : 2012.12.11
 ////////////////////////////////////////////////////////////////////////
-`include "userType_pkg.sv"
+`include "Usertype.sv"
 module bank_FSM(state         ,
                 stall         ,
                 valid         ,
@@ -38,7 +38,7 @@ output [`ADDR_BITS-1:0] ba_addr;
 output ba_issue ;
 output [2:0]process_cmd ;
 
-import userType_pkg::*;
+import usertype::*;
 
 reg [4:0]ba_counter_nxt,ba_counter ;
 bank_state_t ba_state,ba_state_nxt;
@@ -50,7 +50,12 @@ reg [`ADDR_BITS-1:0] active_row_addr;
 reg [`ADDR_BITS-1:0] col_addr_buf;
 reg [`ADDR_BITS-1:0] row_addr_buf;
 
-
+typedef struct packed {
+  r_w_t r_w;
+  logic[13:0] row_addr;
+  logic[13:0] col_addr;
+  logic[2:0] bank_addr;
+} bank_command_t;
 
 bank_command_t command_buf ;
 

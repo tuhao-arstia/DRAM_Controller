@@ -787,9 +787,9 @@
     parameter DQ_BITS          =       8; // Set this parameter to control how many Data bits are used       **Same as part bit width**
     parameter DQS_BITS         =       1; // Set this parameter to control how many Dqs bits are used
 `else `define x16
-    parameter DM_BITS          =       2; // Set this parameter to control how many Data Mask bits are used
-    parameter ADDR_BITS        =      14; // MAX Address Bits
     // Modify for 1Gb 1024 3D-DRAM configuration
+    parameter DM_BITS          =       2; // Set this parameter to control how many Data Mask bits are used
+    parameter ADDR_BITS        =      20; // MAX Address Bits
     parameter ROW_BITS         =      16; // Set this parameter to control how many Address bits are used, new use 16 bits
     parameter COL_BITS         =      4; // Set this parameter to control how many Column bits are used, new use 4 bits
     parameter DQ_BITS          =      128; // Set this parameter to control how many Data bits are used       **Same as part bit width**

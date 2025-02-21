@@ -1,37 +1,74 @@
+//synopsys translate_off
+
+//synopsys translate_on
+
 `timescale 1ns / 10ps
 `include "PATTERN.sv"
-`include "global_address_mapper.sv"
+`include "Package.sv"
+`include "define.sv"
 `include "ddr3.sv"
-`include "../00_TESTBED/INF.sv"
+
+
 
 module TESTBED;
 
 `include "2048Mb_ddr3_parameters.vh"
 
-import userType_pkg::*;
 
-INF intf(); // Instantiate the interface
+wire power_on_rst_n ;
+wire clk ;
+wire clk2 ;
+wire [`USER_COMMAND_BITS:0]command ;
+wire valid;
+wire [3:0]ba_cmd_pm ;
+
+wire  [BA_BITS-1:0]    bank      ;
+wire  [`COL_BITS-1:0]  col_addr  ;
+wire  [`ROW_BITS-1:0]  row_addr  ;
+wire  [`DQ_BITS*8-1:0]  write_data;
+wire  [`DQ_BITS*8-1:0]  read_data ;
+wire read_data_valid ;
+
 
 initial begin
-	$fsdbDumpfile("Package.fsdb");
-    $fsdbDumpvars(0,"+all");
-    $fsdbDumpSVA;
+	    $fsdbDumpfile("Package.fsdb");
+      $fsdbDumpvars(0,"+all");
+      $fsdbDumpSVA;
 end
 
-global_address_mapper I_Mapper(
-      .power_on_rst_n  (intf.power_on_rst_n ),
-      .clk             (intf.clk            ),
-      .clk2            (intf.clk2           ),
 
-      .command         (intf.command        ),
-      .write_data      (intf.write_data     ),
-      .valid           (intf.valid          ),
+Package I_Package(
+//== I/O from System ===============
+         .power_on_rst_n(power_on_rst_n),
+         .clk         (clk            ),
+         .clk2        (clk2           ),
+//==================================
 
-      .ba_cmd_pm       (intf.ba_cmd_pm      ),
-      .read_data       (intf.read_data      ),
-      .read_data_valid (intf.read_data_valid)
-); // Connect the interface to the module
+//== I/O from access command =======
+         .write_data      (write_data     ),
+         .read_data       (read_data      ),
+         .command         (command        ),
+         .valid           (valid          ),
+         .ba_cmd_pm  (ba_cmd_pm ),
+         .read_data_valid (read_data_valid)
+//==================================
 
-PATTERN I_PATTERN(.inf(intf)); // Connect the interface to the program
+         );
+
+
+PATTERN I_PATTERN(
+         .power_on_rst_n  (power_on_rst_n ),
+         .clk             (clk            ),
+         .clk2            (clk2           ),
+       //  .bank            (bank           ),
+       //  .col_addr        (col_addr       ),
+       //  .row_addr        (row_addr       ),
+         .write_data      (write_data     ),
+         .read_data       (read_data      ),
+         .command         (command        ),
+         .valid           (valid          ),
+         .ba_cmd_pm  (ba_cmd_pm ),
+         .read_data_valid (read_data_valid)
+);
 
 endmodule

@@ -124,7 +124,7 @@ module ddr3 (
     parameter feature_odt_hi = 0;
     parameter PERTCKAVG=TDLLK;
 
-    // text macros
+    // text macros, these must be modified
     `define DQ_PER_DQS DQ_BITS/DQS_BITS
     //`define BANKS      (1<<BA_BITS) //8 banks
 	`define BANKS      1

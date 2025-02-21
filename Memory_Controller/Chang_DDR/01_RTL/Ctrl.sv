@@ -16,7 +16,7 @@
 `include "cmd_scheduler.sv"
 `include "wdata_FIFO.sv"
 `include "define.sv"
-`include "userType_pkg.sv"
+`include "Usertype.sv"
 
 module Ctrl(
 //== I/O from System ===============
@@ -35,7 +35,7 @@ module Ctrl(
                read_data_valid
 //==================================
 );
-import userType_pkg::*;
+import usertype::*;
 
 `include "2048Mb_ddr3_parameters.vh" // Quite strange, including here does not cause error?
 
@@ -50,7 +50,7 @@ import userType_pkg::*;
     //== I/O from access command =======
     input  [`DQ_BITS*8-1:0]   write_data;
     output [`DQ_BITS*8-1:0]    read_data;
-    input  [31:0] i_command;
+    input  [`MEM_CTR_COMMAND_BITS-1:0] i_command;
     input  valid ;
 
     output [3:0] ba_cmd_pm; // Indicating which bank is busy 1101 means the 3rd bank
@@ -107,7 +107,7 @@ import userType_pkg::*;
 	wire  [`DQS_BITS-1:0] dqs_n;
 
 
-// PHY to DRAM TRI-STATE BUFFER, PHY
+// PHY to DRAM TRI-STATE BUFFER
 assign dm = (ddr3_rw) ? dm_tdqs_in : dm_tdqs_out ;
 
 assign dq = (ddr3_rw) ? {(`DQ_BITS-1){1'bz}} : data_out ;
@@ -365,7 +365,7 @@ wire wdata_fifo_empty;
         ba,
         addr,
         dq,
-		    dq_all,
+		dq_all,
         dqs,
         dqs_n,
         tdqs_n,
@@ -773,7 +773,7 @@ else
 end
 
 //====================================================
-//      Physical layer tranform
+//Physical layer tranform
 //====================================================
 // {cke,cs_n,ras_n,cas_n,we_n}
 always@(negedge clk) begin: DRAM_PHY_CK_CS_RAS_CAS_WE
@@ -848,7 +848,7 @@ end
 
 
 //pad_rw
-always@(negedge clk) // This needs the waveform to imaging
+always@(negedge clk)
 begin: DRAM_PHY_RW
 case(d_state_nxt)
   `D_READ1   : ddr3_rw <= 1 ;
@@ -857,13 +857,10 @@ case(d_state_nxt)
   `D_WRITE1  : ddr3_rw <= 0 ;
   `D_WRITE2  : ddr3_rw <= 0 ;
   `D_WRITE_F : ddr3_rw <= 0 ;
-  default    : ddr3_rw <= ddr3_rw ;
+  default  : ddr3_rw <= ddr3_rw ;
 endcase
 end
 
-//====================================================
-//      RD/WR PHY control
-//====================================================
 //odt control
 always@(negedge clk)
 begin: ODT_CTR
