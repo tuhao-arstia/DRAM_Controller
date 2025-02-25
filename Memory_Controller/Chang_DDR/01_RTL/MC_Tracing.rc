@@ -1,0 +1,208 @@
+Magic 271485
+Revision Verdi_T-2022.06
+
+; Window Layout <x> <y> <width> <height> <signalwidth> <valuewidth>
+viewPort 1920 23 1920 1009 384 127
+
+; File list:
+; openDirFile [-d delimiter] [-s time_offset] [-rf auto_bus_rule_file] path_name file_name
+openDirFile -d / "" "/home/2023_summer/2023train11/Seniors_DDR3/Chang_DDR/Package.fsdb"
+
+; file time scale:
+; fileTimeScale ### s|ms|us|ns|ps
+
+; signal spacing:
+signalSpacing 5
+
+; windowTimeUnit is used for zoom, cursor & marker
+; waveform viewport range
+zoom 1089857.819224 2727528.439239
+cursor 1881000.000000
+marker 0.000000
+
+; user define markers
+; userMarker time_pos marker_name color linestyle
+; visible top row signal index
+top 46
+; marker line index
+markerPos 94
+
+; event list
+; addEvent event_name event_expression
+; curEvent event_name
+
+
+
+COMPLEX_EVENT_BEGIN
+
+
+COMPLEX_EVENT_END
+
+
+
+; toolbar current search type
+; curSTATUS search_type
+curSTATUS ByChange
+
+
+addGroup "Bank0"
+activeDirFile "" "/home/2023_summer/2023train11/Seniors_DDR3/Chang_DDR/Package.fsdb"
+addSignal -h 21 /TESTBED/I_Package/Rank0/clk
+addSignal -h 21 -holdScope valid
+addSignal -h 21 -UNSIGNED /TESTBED/I_Package/Rank0/ba0/ba_state[4:0]
+addSignal -h 21 -UNSIGNED -holdScope ba_state_nxt[4:0]
+addSignal -h 21 -UNSIGNED -HEX -holdScope col_addr[13:0]
+addSignal -h 21 -UNSIGNED -HEX -holdScope col_addr_buf[13:0]
+addSignal -h 21 -UNSIGNED -HEX -holdScope col_addr_t[13:0]
+addSignal -h 21 -UNSIGNED -HEX -holdScope counter[4:0]
+addSignal -h 21 -UNSIGNED -HEX -holdScope number[2:0]
+addSignal -h 21 -UNSIGNED -HEX -holdScope row_addr[13:0]
+addSignal -h 21 -UNSIGNED -HEX -holdScope row_addr_buf[13:0]
+addSignal -h 21 -holdScope stall
+addSignal -h 21 -UNSIGNED -HEX -holdScope bank[2:0]
+addSignal -h 21 /TESTBED/I_Package/Rank0/clk
+addSignal -h 21 -holdScope valid
+addSignal -h 21 -UNSIGNED /TESTBED/I_Package/Rank0/ba0/ba_state[4:0]
+addSignal -h 21 -UNSIGNED -holdScope ba_state_nxt[4:0]
+addSignal -h 21 -UNSIGNED -HEX -holdScope col_addr[13:0]
+addSignal -h 21 -UNSIGNED -HEX -holdScope col_addr_buf[13:0]
+addSignal -h 21 -UNSIGNED -HEX -holdScope col_addr_t[13:0]
+addSignal -h 21 -UNSIGNED -HEX -holdScope counter[4:0]
+addSignal -h 21 -UNSIGNED -HEX -holdScope number[2:0]
+addSignal -h 21 -UNSIGNED -HEX -holdScope row_addr[13:0]
+addSignal -h 21 -UNSIGNED -HEX -holdScope row_addr_buf[13:0]
+addSignal -h 21 -holdScope stall
+addSignal -h 21 -UNSIGNED -HEX -holdScope bank[2:0]
+addGroup "Command Scheduler"
+addSignal -h 21 -UNSIGNED -HEX /TESTBED/I_Package/Rank0/scheduler/act_count[2:0]
+addSignal -h 21 -holdScope act_pri
+addSignal -h 21 -holdScope b0_big
+addSignal -h 21 -holdScope b0_big_st
+addSignal -h 21 -UNSIGNED -HEX -holdScope b0_c_counter[7:0]
+addSignal -h 21 -UNSIGNED -HEX -holdScope b0_counter[7:0]
+addSignal -h 21 -UNSIGNED -holdScope ba0_proc[2:0]
+addSignal -h 21 -holdScope ba0_stall
+addSignal -h 21 -UNSIGNED -HEX -holdScope ba0_state[4:0]
+addSignal -h 21 -UNSIGNED -holdScope bax_state[4:0]
+addSignal -h 21 -holdScope clk
+addSignal -h 21 -UNSIGNED -holdScope current_rw
+addSignal -h 21 -UNSIGNED -holdScope f_ba_state[4:0]
+addSignal -h 21 -holdScope have_act
+addSignal -h 21 -holdScope have_act_a
+addSignal -h 21 -holdScope have_act_c
+addSignal -h 21 -holdScope have_cmd_act
+addSignal -h 21 -holdScope have_cmd_pre
+addSignal -h 21 -holdScope have_cmd_read
+addSignal -h 21 -holdScope have_cmd_write
+addSignal -h 21 -holdScope have_pre
+addSignal -h 21 -holdScope have_pre_a
+addSignal -h 21 -holdScope have_pre_c
+addSignal -h 21 -holdScope have_read
+addSignal -h 21 -holdScope have_read_a
+addSignal -h 21 -holdScope have_read_c
+addSignal -h 21 -holdScope have_write
+addSignal -h 21 -holdScope have_write_a
+addSignal -h 21 -holdScope have_write_c
+addSignal -h 21 -holdScope isu_fifo_full
+addSignal -h 21 -holdScope pre0_threshold
+addSignal -h 21 -holdScope pre1_threshold
+addSignal -h 21 -holdScope pre2_threshold
+addSignal -h 21 -holdScope pre3_threshold
+addSignal -h 21 -UNSIGNED -HEX -holdScope pre_count[2:0]
+addSignal -h 21 -holdScope pre_pri
+addSignal -h 21 -UNSIGNED -HEX -holdScope read_count[2:0]
+addSignal -h 21 -holdScope read_pri
+addSignal -h 21 -holdScope rst_n
+addSignal -h 21 -UNSIGNED -HEX -holdScope sch_addr[13:0]
+addSignal -h 21 -UNSIGNED -HEX -holdScope sch_bank[2:0]
+addSignal -h 21 -UNSIGNED -HEX -holdScope sch_command[3:0]
+addSignal -h 21 -holdScope sch_issue
+addSignal -h 21 -UNSIGNED -HEX -holdScope sch_out[20:0]
+addSignal -h 21 -UNSIGNED -HEX -holdScope write_count[2:0]
+addSignal -h 21 -holdScope write_pri
+addSignal -h 21 /TESTBED/I_Package/Rank0/ba0/clk
+addSignal -h 21 -UNSIGNED -HEX /TESTBED/I_Package/Rank0/scheduler/act_count[2:0]
+addSignal -h 21 -holdScope act_pri
+addSignal -h 21 -holdScope all_no_0
+addSignal -h 21 -holdScope all_no_1
+addSignal -h 21 -holdScope all_no_2
+addSignal -h 21 -holdScope all_no_3
+addSignal -h 21 -holdScope b1_big
+addSignal -h 21 -holdScope b1_big_st
+addSignal -h 21 -UNSIGNED -HEX -holdScope b1_c_counter[7:0]
+addSignal -h 21 -UNSIGNED -HEX -holdScope b1_counter[7:0]
+addSignal -h 21 -holdScope b2_big
+addSignal -h 21 -holdScope b2_big_st
+addSignal -h 21 -UNSIGNED -HEX -holdScope b2_c_counter[7:0]
+addSignal -h 21 -UNSIGNED -HEX -holdScope b2_counter[7:0]
+addSignal -h 21 -holdScope b3_big
+addSignal -h 21 -holdScope b3_big_st
+addSignal -h 21 -UNSIGNED -HEX -holdScope b3_c_counter[7:0]
+addSignal -h 21 -UNSIGNED -HEX -holdScope b3_counter[7:0]
+addSignal -h 21 -UNSIGNED -HEX -holdScope ba0_state[4:0]
+addSignal -h 21 -UNSIGNED -HEX -holdScope ba1_info[21:0]
+addSignal -h 21 -UNSIGNED -HEX -holdScope ba1_proc[2:0]
+addSignal -h 21 -holdScope ba1_stall
+addSignal -h 21 -UNSIGNED -HEX -holdScope ba1_state[4:0]
+addSignal -h 21 -UNSIGNED -HEX -holdScope ba2_info[21:0]
+addSignal -h 21 -UNSIGNED -HEX -holdScope ba2_proc[2:0]
+addSignal -h 21 -holdScope ba2_stall
+addSignal -h 21 -UNSIGNED -HEX -holdScope ba2_state[4:0]
+addSignal -h 21 -UNSIGNED -HEX -holdScope ba3_info[21:0]
+addSignal -h 21 -UNSIGNED -HEX -holdScope ba3_proc[2:0]
+addSignal -h 21 -holdScope ba3_stall
+addSignal -h 21 -UNSIGNED -HEX -holdScope ba3_state[4:0]
+addSignal -h 21 -UNSIGNED -holdScope current_rw
+addSignal -h 21 -holdScope have_act
+addSignal -h 21 -holdScope have_act_a
+addSignal -h 21 -holdScope have_act_c
+addSignal -h 21 -holdScope have_cmd_act
+addSignal -h 21 -holdScope have_cmd_pre
+addSignal -h 21 -holdScope have_cmd_read
+addSignal -h 21 -holdScope have_cmd_write
+addSignal -h 21 -holdScope have_pre
+addSignal -h 21 -holdScope have_pre_a
+addSignal -h 21 -holdScope have_pre_c
+addSignal -h 21 -holdScope have_read
+addSignal -h 21 -holdScope have_read_a
+addSignal -h 21 -holdScope have_read_c
+addSignal -h 21 -holdScope have_write
+addSignal -h 21 -holdScope have_write_a
+addSignal -h 21 -holdScope have_write_c
+addSignal -h 21 -holdScope isu_fifo_full
+addSignal -h 21 -holdScope pre0_threshold
+addSignal -h 21 -holdScope pre1_threshold
+addSignal -h 21 -holdScope pre2_threshold
+addSignal -h 21 -holdScope pre3_threshold
+addGroup "Main Control"
+addSignal -h 21 -UNSIGNED /TESTBED/I_Package/Rank0/state[4:0]
+addSignal -h 21 -holdScope clk
+addSignal -h 21 /TESTBED/I_Package/valid
+addSignal -h 21 /TESTBED/I_Package/Rank0/command
+addGroup "G4"
+
+; getSignalForm Scope Hierarchy Status
+; active file of getSignalForm
+activeDirFile "" "/home/2023_summer/2023train11/Seniors_DDR3/Chang_DDR/Package.fsdb"
+
+GETSIGNALFORM_SCOPE_HIERARCHY_BEGIN
+getSignalForm close
+
+"/TESTBED"
+"/TESTBED/I_Package"
+"/TESTBED/I_Package/Rank0"
+
+SCOPE_LIST_BEGIN
+"/TESTBED"
+"/TESTBED/I_PATTERN"
+"/TESTBED/I_Package"
+"/TESTBED/I_Package/Rank0"
+"/TESTBED/I_Package/Rank0/Bank0"
+"/TESTBED/I_Package/Rank0/ba0"
+"/TESTBED/I_Package/Rank0/ba3"
+"/TESTBED/I_Package/Rank0/scheduler"
+SCOPE_LIST_END
+
+GETSIGNALFORM_SCOPE_HIERARCHY_END
+
+

@@ -2,6 +2,7 @@
 #include <fstream>
 #include <functional>
 #include <iostream>
+#include <string>
 
 #include "base/exception.h"
 #include "base/request.h"
@@ -12,7 +13,8 @@ namespace Ramulator
 {
   namespace fs = std::filesystem;
 
-  LoadStoreStallCore::LoadStoreStallCore(int clk_ratio, int core_id, size_t num_expected_traces, std::string trace_path_str,bool is_debug)
+  LoadStoreStallCore::LoadStoreStallCore(int clk_ratio, int core_id, size_t num_expected_traces, std::string trace_path_str
+  ,std::string returned_trace_path_str,bool is_debug)
   {
     m_is_debug = is_debug;
     m_num_expected_traces = num_expected_traces;
@@ -20,25 +22,22 @@ namespace Ramulator
     m_clock_ratio = clk_ratio;
     m_callback = [this](Request &req)
     { return this->receive(req); }; // Check to see if the request comes back
-    init_trace(trace_path_str);
+    init_trace(trace_path_str, returned_trace_path_str);
+    m_returned_trace_file_path_str = returned_trace_path_str;
   };
 
   void LoadStoreStallCore::tick()
   {
     m_clk++;
 
-    if (m_current_stall_cycles > 0)
+    if (m_current_stall_cycles > 0) // Processor core stalling
     {
       m_current_stall_cycles--;
       return;
     }
 
-    if (m_waiting_for_request == true)
-    {
-      return;
-    }
-
-    if(this->is_finished() || (m_curr_trace_idx > m_trace_length)) // If the core finish executing all the traces, it no longer needs to send request
+    // If the core finish executing all the traces, it no longer needs to send request
+    if(this->is_finished() || (m_curr_trace_idx >= m_num_expected_traces) || (m_curr_trace_idx >= m_trace_length))
     {
       return;
     }
@@ -53,8 +52,8 @@ namespace Ramulator
 
     if (request_sent)
     {
-      if (t.is_write == false) // Stall only if the request is a read, since it is waiting for the request
-        m_waiting_for_request = true;
+      if (t.is_write == true) // If the request is a write request, simply mark it as retired
+        m_num_retired_traces++;
 
       m_current_stall_cycles = t.stall_cycles;
       m_curr_trace_idx++;
@@ -69,6 +68,11 @@ namespace Ramulator
       std::cerr << req.type_id <<"request received at " << m_clk << " clk cycle addr " << req.addr << " and core id " << m_core_id << std::endl;
 
     m_waiting_for_request = false;
+
+    // Write the request to the returned trace file in the following format
+    // clk, request address, core id
+    m_returned_trace_file << m_clk << " " << req.addr << " " << m_core_id << std::endl;
+
     m_num_retired_traces++;
   };
 
@@ -77,12 +81,20 @@ namespace Ramulator
     m_memory_system = memory_system;
   };
 
-  void LoadStoreStallCore::init_trace(const std::string &file_path_str)
+
+  void LoadStoreStallCore::init_trace(const std::string &file_path_str, const std::string &returned_trace_path_str)
   {
     fs::path trace_path(file_path_str);
+    fs::path returned_trace_path(returned_trace_path_str);
+
     if (!fs::exists(trace_path))
     {
       throw ConfigurationError("Trace {} does not exist!", file_path_str);
+    }
+
+    if (!fs::exists(returned_trace_path))
+    {
+      throw ConfigurationError("Folder for return trace {} does not exists", returned_trace_path_str);
     }
 
     std::ifstream trace_file(trace_path);
@@ -139,12 +151,17 @@ namespace Ramulator
     trace_file.close();
 
     m_trace_length = m_trace.size();
+
+    // Create a returned trace file
+    std::ofstream returned_trace_file(returned_trace_path / fs::path("returned_request_trace_"+std::to_string(m_core_id) + ".txt"));
+    // store it to the variable
+    m_returned_trace_file = std::move(returned_trace_file);
   };
 
   // TODO: FIXME
   bool LoadStoreStallCore::is_finished()
     {
-      return (m_num_retired_traces>=m_num_expected_traces) || (m_curr_trace_idx >= m_trace_length);
-
+      // If the core retired enough request, it is finished
+      return m_num_retired_traces>=m_num_expected_traces;
     };
 }; // namespace Ramulator

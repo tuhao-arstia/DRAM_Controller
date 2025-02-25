@@ -10,7 +10,7 @@ def generate_st_ld_trace(filename,filename2,pattern_type,num_lines,gen_stall,loa
     # operation = random.choice(['ST', 'LD'])
     operation = 'LD'
     # generate marching pattern for it, increment the address
-    num_of_channels = 64
+    num_of_channels = 4
     row_size = 2**16    # 64K rows due to 1Gb of memory
     colmun_size = 2**14 # 2K Bytes 2**11 * 2**3
     data_channel_size = 1024 # IO channel siz
@@ -66,7 +66,8 @@ def generate_st_ld_trace(filename,filename2,pattern_type,num_lines,gen_stall,loa
                 else:
                     operation = 'ST'
 
-                gen_channel_num = 0
+                # Randomly picks different channel, pick from 0~3
+                gen_channel_num = random.randint(0, num_of_channels-1)
                 gen_row_bits    = 0
                 # Make it a walking pattern
                 gen_column_bits = 0

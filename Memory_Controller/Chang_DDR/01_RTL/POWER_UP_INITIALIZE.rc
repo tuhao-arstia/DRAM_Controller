@@ -1,0 +1,101 @@
+Magic 271485
+Revision Verdi_T-2022.06
+
+; Window Layout <x> <y> <width> <height> <signalwidth> <valuewidth>
+viewPort 0 23 1536 793 305 65
+
+; File list:
+; openDirFile [-d delimiter] [-s time_offset] [-rf auto_bus_rule_file] path_name file_name
+openDirFile -d / "" "/home/2023_summer/2023train11/Seniors_DDR3/Chang_DDR/Package.fsdb"
+
+; file time scale:
+; fileTimeScale ### s|ms|us|ns|ps
+
+; signal spacing:
+signalSpacing 5
+
+; windowTimeUnit is used for zoom, cursor & marker
+; waveform viewport range
+zoom 1560479.827443 2199253.283443
+cursor 310500.000000
+marker 0.000000
+
+; user define markers
+; userMarker time_pos marker_name color linestyle
+; visible top row signal index
+top 0
+; marker line index
+markerPos 18
+
+; event list
+; addEvent event_name event_expression
+; curEvent event_name
+
+
+
+COMPLEX_EVENT_BEGIN
+
+
+COMPLEX_EVENT_END
+
+
+
+; toolbar current search type
+; curSTATUS search_type
+curSTATUS ByChange
+
+
+addGroup "G1"
+activeDirFile "" "/home/2023_summer/2023train11/Seniors_DDR3/Chang_DDR/Package.fsdb"
+addSignal -h 21 /TESTBED/I_Package/Rank0/clk
+addSignal -h 21 -holdScope clk2
+addSignal -h 21 -UNSIGNED -holdScope state[4:0]
+addSignal -h 21 -UNSIGNED -holdScope state_nxt[4:0]
+addSignal -h 21 -holdScope power_on_rst_n
+addSignal -h 21 -UNSIGNED -UDEC -holdScope init_cnt[9:0]
+addSignal -h 21 -UNSIGNED -UDEC -holdScope init_cnt_next[9:0]
+addGroup "G2"
+addSignal -h 21 -UNSIGNED /TESTBED/I_Package/Rank0/d_state[3:0]
+addSignal -h 21 -UNSIGNED -holdScope d_state_nxt[3:0]
+addSignal -h 21 -UNSIGNED -holdScope dq_state[15:0]
+addSignal -h 21 -UNSIGNED -holdScope dq_state_nxt[15:0]
+addSignal -h 21 -holdScope cas_n
+addSignal -h 21 /TESTBED/I_Package/Rank0/Bank0/ck
+addSignal -h 21 /TESTBED/I_Package/Rank0/cke
+addSignal -h 21 -UNSIGNED -HEX /TESTBED/I_Package/Rank0/Bank0/ba[2:0]
+addSignal -h 21 -UNSIGNED -HEX /TESTBED/I_Package/Rank0/cs_mux[3:0]
+addSignal -h 21 -holdScope ck_n
+addSignal -h 21 -holdScope cs_n
+addSignal -h 21 -holdScope ras_n
+addSignal -h 21 -holdScope cas_n
+addSignal -h 21 -holdScope we_n
+addSignal -h 21 -UNSIGNED -HEX -holdScope dm_tdqs_in[1:0]
+addSignal -h 21 -UNSIGNED -HEX /TESTBED/I_Package/Rank0/Bank0/addr[13:0]
+addSignal -h 21 -UNSIGNED -HEX -holdScope dq[15:0]
+addSignal -h 21 -UNSIGNED -HEX -holdScope dq_all[127:0]
+addSignal -h 21 /TESTBED/I_Package/Rank0/odt
+addGroup "G3"
+
+; getSignalForm Scope Hierarchy Status
+; active file of getSignalForm
+activeDirFile "" "/home/2023_summer/2023train11/Seniors_DDR3/Chang_DDR/Package.fsdb"
+
+GETSIGNALFORM_SCOPE_HIERARCHY_BEGIN
+getSignalForm close
+
+"/TESTBED"
+"/TESTBED/I_Package"
+"/TESTBED/I_Package/Rank0"
+
+SCOPE_LIST_BEGIN
+"/TESTBED"
+"/TESTBED/I_Package"
+"/TESTBED/I_Package/Rank0"
+"/TESTBED/I_Package/Rank0/INITIALIZATION_COUNTER"
+"/TESTBED/I_Package/Rank0/ACT_BANK_CMD_FF"
+"/TESTBED/I_Package/Rank0/Bank0"
+SCOPE_LIST_END
+
+GETSIGNALFORM_SCOPE_HIERARCHY_END
+
+

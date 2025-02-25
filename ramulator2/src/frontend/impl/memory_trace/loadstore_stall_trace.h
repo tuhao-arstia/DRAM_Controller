@@ -4,6 +4,7 @@
 #include <fstream>
 #include <functional>
 #include <iostream>
+#include <string>
 
 #include "base/exception.h"
 #include "base/request.h"
@@ -44,11 +45,16 @@ namespace Ramulator
 
     IMemorySystem *m_memory_system;
 
+    std::string m_returned_trace_file_path_str;
+    // a return trace file
+    std::ofstream m_returned_trace_file;
+
   public:
     // callback
     std::function<void(Request &)> m_callback;
 
-    LoadStoreStallCore(int clk_ratio, int core_id, size_t num_expected_traces, std::string trace_path_str, bool is_debug);
+    LoadStoreStallCore(int clk_ratio, int core_id, size_t num_expected_traces, std::string trace_path_str,
+    std::string returned_trace_path_str, bool is_debug);
 
     void tick();
 
@@ -57,7 +63,7 @@ namespace Ramulator
     void connect_memory_system(IMemorySystem *memory_system);
 
   private:
-    void init_trace(const std::string &file_path_str);
+    void init_trace(const std::string &file_path_str, const std::string &returned_trace_path_str);
 
     // TODO: FIXME
     bool is_finished();

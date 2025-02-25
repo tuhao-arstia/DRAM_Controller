@@ -3,10 +3,9 @@
 //synopsys translate_on
 
 `timescale 1ns / 10ps
-`include "PATTERN.sv"
-`include "Package.sv"
-`include "define.sv"
-`include "ddr3.sv"
+`include "PATTERN.v"
+`include "Package.v"
+`include "ddr3.v"
 
 
 
@@ -15,25 +14,27 @@ module TESTBED;
 `include "2048Mb_ddr3_parameters.vh"
 
 
+
+
 wire power_on_rst_n ;
 wire clk ;
 wire clk2 ;
-wire [`USER_COMMAND_BITS-1:0]command ;
+wire [33:0]command ;
 wire valid;
 wire [3:0]ba_cmd_pm ;
 
 wire  [BA_BITS-1:0]    bank      ;
-wire  [`COL_BITS-1:0]  col_addr  ;
-wire  [`ROW_BITS-1:0]  row_addr  ;
-wire  [`DQ_BITS*8-1:0]  write_data;
-wire  [`DQ_BITS*8-1:0]  read_data ;
+wire  [ADDR_BITS-1:0]  col_addr  ;
+wire  [ADDR_BITS-1:0]  row_addr  ;
+wire  [DQ_BITS*8-1:0]  write_data;
+wire  [DQ_BITS*8-1:0]  read_data ;
 wire read_data_valid ;
 
 
 initial begin
-	    $fsdbDumpfile("Package.fsdb");
-      $fsdbDumpvars(0,"+all");
-      $fsdbDumpSVA;
+	$fsdbDumpfile("Package.fsdb");
+    $fsdbDumpvars(0,"+all");
+    $fsdbDumpSVA;
 end
 
 
@@ -51,8 +52,8 @@ Package I_Package(
          .valid           (valid          ),
          .ba_cmd_pm  (ba_cmd_pm ),
          .read_data_valid (read_data_valid)
-//==================================
-
+//================================== 
+              
          );
 
 

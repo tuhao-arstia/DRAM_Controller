@@ -1,0 +1,14 @@
+vcs -full64 -sverilog TESTBED.v +define+p2+FSDB +define+x16 +define+sg15E +define+MAX_MEM -error=noMPD \
+-debug_access+all \
+-P /usr/cad/synopsys/verdi/cur/share/PLI/VCS/LINUX64/novas.tab \
+/usr/cad/synopsys/verdi/cur/share/PLI/VCS/LINUX64/pli.a \
+2>&1 | tee vcs.log
+
+# Step 2: Run the simulation binary and append logs to the same file
+if [ -x ./simv ]; then
+    ./simv 2>&1 | tee -a vcs.log
+else
+    echo "Error: simv binary not found or not executable" | tee -a vcs.log
+    exit 1
+fi
+

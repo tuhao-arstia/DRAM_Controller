@@ -291,7 +291,8 @@ public:
       }
     }
 
-    // Bandwidth calculation
+    // Bandwidth calculation, the bandwidth calculation stems from the time read is sent to dram
+    // from the memory controller, and the time it returns back to the memory controller
     if(m_clk % m_sample_time == 0 && m_clk != 0) {
       float _bandwidth = float(m_interval_served_requests * 128) / float(m_sample_time);
 
@@ -445,6 +446,7 @@ private:
     bool request_found = false;
     // 2.1    First, check the act buffer to serve requests that are already
     // activating (avoid useless ACTs)
+    // This get_best_request is for scheduling the requests
     if (req_it = m_scheduler->get_best_request(m_active_buffer);
         req_it != m_active_buffer.end()) {
       if (m_dram->check_ready(req_it->command, req_it->addr_vec)) {

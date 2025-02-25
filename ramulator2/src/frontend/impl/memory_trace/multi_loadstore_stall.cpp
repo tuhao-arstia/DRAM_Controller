@@ -22,6 +22,7 @@ private:
   int m_num_traces = -1;
   bool m_is_debug = false;
   std::vector<LoadStoreStallCore*> m_trace_cores;
+  std::string m_returned_trace_path;
 
   size_t m_num_expected_insts = 0;
 
@@ -31,12 +32,13 @@ public:
     m_num_traces = trace_list.size();
     m_clock_ratio = param<uint>("clock_ratio").required();
     m_is_debug = param<bool>("debug").default_val(false);
+    m_returned_trace_path = param<std::string>("returned_trace_path").desc("Path to the returned trace file.").required();
 
     m_num_expected_insts = param<int>("num_expected_insts").desc("Number of instructions that the frontend should execute.").required();
 
     // Create the cores
     for (int id = 0; id < m_num_traces; id++) {
-      LoadStoreStallCore* trace_core = new LoadStoreStallCore(m_clock_ratio, id ,m_num_expected_insts,trace_list[id],m_is_debug);
+      LoadStoreStallCore* trace_core = new LoadStoreStallCore(m_clock_ratio, id ,m_num_expected_insts,trace_list[id],m_returned_trace_path,m_is_debug);
       // trace_core->m_callback = [this](Request& req){return this->receive(req);} ;// Check to see if the request comes back
       m_trace_cores.push_back(trace_core);
     }

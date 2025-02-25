@@ -1,0 +1,199 @@
+Frontend:
+  impl: LoadStoreStallTrace
+  clock_ratio: 3
+  num_expected_insts: 10
+  returned_trace_path: ../returned_trace/
+  debug: false
+  traces:
+    - ../traces/_read_write_interleave_same_row_trace_0.txt
+    - ../traces/_read_write_interleave_same_row_trace_1.txt
+    - ../traces/_read_write_interleave_same_row_trace_2.txt
+    - ../traces/_read_write_interleave_same_row_trace_3.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_4.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_5.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_6.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_7.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_8.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_9.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_10.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_11.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_12.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_13.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_14.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_15.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_16.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_17.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_18.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_19.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_20.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_21.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_22.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_23.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_24.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_25.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_26.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_27.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_28.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_29.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_30.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_31.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_32.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_33.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_34.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_35.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_36.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_37.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_38.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_39.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_40.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_41.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_42.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_43.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_44.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_45.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_46.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_47.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_48.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_49.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_50.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_51.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_52.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_53.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_54.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_55.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_56.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_57.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_58.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_59.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_60.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_61.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_62.txt
+    # - /home/sicajc/DRAM_PROJECT/Master_Thesis_MC/ramulator2/traces/_ideal_sequential_trace_63.txt
+
+    # - ../traces/_ideal_sequential_trace_0.txt
+    # - ../traces/_ideal_sequential_trace_1.txt
+    # - ../traces/_ideal_sequential_trace_2.txt
+    # - ../traces/_ideal_sequential_trace_3.txt
+    # - ../traces/_ideal_sequential_trace_4.txt
+    # - ../traces/_ideal_sequential_trace_5.txt
+    # - ../traces/_ideal_sequential_trace_6.txt
+    # - ../traces/_ideal_sequential_trace_7.txt
+    # - ../traces/_ideal_sequential_trace_8.txt
+    # - ../traces/_ideal_sequential_trace_9.txt
+    # - ../traces/_ideal_sequential_trace_10.txt
+    # - ../traces/_ideal_sequential_trace_11.txt
+    # - ../traces/_ideal_sequential_trace_12.txt
+    # - ../traces/_ideal_sequential_trace_13.txt
+    # - ../traces/_ideal_sequential_trace_14.txt
+    # - ../traces/_ideal_sequential_trace_15.txt
+    # - ../traces/_ideal_sequential_trace_16.txt
+    # - ../traces/_ideal_sequential_trace_17.txt
+    # - ../traces/_ideal_sequential_trace_18.txt
+    # - ../traces/_ideal_sequential_trace_19.txt
+    # - ../traces/_ideal_sequential_trace_20.txt
+    # - ../traces/_ideal_sequential_trace_21.txt
+    # - ../traces/_ideal_sequential_trace_22.txt
+    # - ../traces/_ideal_sequential_trace_23.txt
+    # - ../traces/_ideal_sequential_trace_24.txt
+    # - ../traces/_ideal_sequential_trace_25.txt
+    # - ../traces/_ideal_sequential_trace_26.txt
+    # - ../traces/_ideal_sequential_trace_27.txt
+    # - ../traces/_ideal_sequential_trace_28.txt
+    # - ../traces/_ideal_sequential_trace_29.txt
+    # - ../traces/_ideal_sequential_trace_30.txt
+    # - ../traces/_ideal_sequential_trace_31.txt
+    # - ../traces/_ideal_sequential_trace_32.txt
+    # - ../traces/_ideal_sequential_trace_33.txt
+    # - ../traces/_ideal_sequential_trace_34.txt
+    # - ../traces/_ideal_sequential_trace_35.txt
+    # - ../traces/_ideal_sequential_trace_36.txt
+    # - ../traces/_ideal_sequential_trace_37.txt
+    # - ../traces/_ideal_sequential_trace_38.txt
+    # - ../traces/_ideal_sequential_trace_39.txt
+    # - ../traces/_ideal_sequential_trace_40.txt
+    # - ../traces/_ideal_sequential_trace_41.txt
+    # - ../traces/_ideal_sequential_trace_42.txt
+    # - ../traces/_ideal_sequential_trace_43.txt
+    # - ../traces/_ideal_sequential_trace_44.txt
+    # - ../traces/_ideal_sequential_trace_45.txt
+    # - ../traces/_ideal_sequential_trace_46.txt
+    # - ../traces/_ideal_sequential_trace_47.txt
+    # - ../traces/_ideal_sequential_trace_48.txt
+    # - ../traces/_ideal_sequential_trace_49.txt
+    # - ../traces/_ideal_sequential_trace_50.txt
+    # - ../traces/_ideal_sequential_trace_51.txt
+    # - ../traces/_ideal_sequential_trace_52.txt
+    # - ../traces/_ideal_sequential_trace_53.txt
+    # - ../traces/_ideal_sequential_trace_54.txt
+    # - ../traces/_ideal_sequential_trace_55.txt
+    # - ../traces/_ideal_sequential_trace_56.txt
+    # - ../traces/_ideal_sequential_trace_57.txt
+    # - ../traces/_ideal_sequential_trace_58.txt
+    # - ../traces/_ideal_sequential_trace_59.txt
+    # - ../traces/_ideal_sequential_trace_60.txt
+    # - ../traces/_ideal_sequential_trace_61.txt
+    # - ../traces/_ideal_sequential_trace_62.txt
+    # - ../traces/_ideal_sequential_trace_63.txt
+
+    # - /home/sicajc/user/sicajc/main/Senior_3D_DRAM/ramulator2/traces/trace_0.txt
+    # - /home/sicajc/DRAM_PROJECT/Senior_3D_DRAM/ramulator2/traces/trace_1.txt
+    # - /home/sicajc/DRAM_PROJECT/Senior_3D_DRAM/ramulator2/traces/trace_2.txt
+    # - /home/sicajc/DRAM_PROJECT/Senior_3D_DRAM/ramulator2/traces/trace_3.txt
+
+
+  # Translation:
+  #   impl: RandomTranslation
+  #   max_addr: 2199015689679
+
+  Translation:
+    impl: NoTranslation
+    max_addr: 33554432
+
+MemorySystem:
+  impl: GenericDRAM
+  clock_ratio: 3
+
+  DRAM:
+    impl: DDR4
+
+    drampower_enable: true # This can enable dram power model
+    structure_type: 1
+    # The preset of DRAM voltage and current must be specified, also the preset for power modeling has to exists within.
+    voltage:
+      preset: Default # Sets to Default to enable basic voltage adjustment
+    current:
+      preset: Default
+
+    org:
+      preset: DDR4_1Gb_1bank_x1024
+      channel_width: 1024
+      # preset: DDR4_2Gb_x4
+      channel: 4
+      rank: 1
+    timing:
+      preset: DDR4_3DDRAM_1024
+
+
+  Controller:
+    impl: BankLevelController
+    sample_time: 500
+    bandwidth_record_file: ../cmd_records/bandwidth_record_ideal.txt
+    Scheduler:
+      impl: FCFS
+    RefreshManager:
+      impl: AllBank
+    RowPolicy:
+      impl: OpenRowPolicy
+      cap: 4
+    plugins:
+      - ControllerPlugin:
+          impl: CommandCounter
+          path: ../cmd_records/ideal_1024Mb_1ch.cmds
+          commands_to_count:
+            - REFab
+      - ControllerPlugin:
+          impl: TraceRecorder
+          path: ../cmd_records/ideal_1024Mb_2ch.trace
+
+  AddrMapper:
+    impl: ChRaBaRoCo

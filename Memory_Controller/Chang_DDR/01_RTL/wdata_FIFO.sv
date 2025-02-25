@@ -11,6 +11,7 @@
 
 `define COUNTER_WIDTH 5
 `define DEPTH 32
+`include "define.sv"
 
 module wdata_FIFO( clk,
                    rst_n,

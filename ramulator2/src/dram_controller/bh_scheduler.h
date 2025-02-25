@@ -12,7 +12,7 @@ namespace Ramulator {
 
 class IBHScheduler {
   RAMULATOR_REGISTER_INTERFACE(IBHScheduler, "BHScheduler", "Memory Controller Request Scheduler");
-  
+
   public:
     virtual void tick() = 0;
     virtual ReqBuffer::iterator compare(ReqBuffer::iterator req1, ReqBuffer::iterator req2) = 0;

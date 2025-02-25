@@ -1,25 +1,25 @@
 `define MAX_MEM
 /****************************************************************************************
 *
-*   Disclaimer   This software code and all associated documentation, comments or other
-*  of Warranty:  information (collectively "Software") is provided "AS IS" without
-*                warranty of any kind. MICRON TECHNOLOGY, INC. ("MTI") EXPRESSLY
-*                DISCLAIMS ALL WARRANTIES EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
-*                TO, NONINFRINGEMENT OF THIRD PARTY RIGHTS, AND ANY IMPLIED WARRANTIES
-*                OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR PURPOSE. MTI DOES NOT
-*                WARRANT THAT THE SOFTWARE WILL MEET YOUR REQUIREMENTS, OR THAT THE
-*                OPERATION OF THE SOFTWARE WILL BE UNINTERRUPTED OR ERROR-FREE.
-*                FURTHERMORE, MTI DOES NOT MAKE ANY REPRESENTATIONS REGARDING THE USE OR
-*                THE RESULTS OF THE USE OF THE SOFTWARE IN TERMS OF ITS CORRECTNESS,
-*                ACCURACY, RELIABILITY, OR OTHERWISE. THE ENTIRE RISK ARISING OUT OF USE
-*                OR PERFORMANCE OF THE SOFTWARE REMAINS WITH YOU. IN NO EVENT SHALL MTI,
-*                ITS AFFILIATED COMPANIES OR THEIR SUPPLIERS BE LIABLE FOR ANY DIRECT,
-*                INDIRECT, CONSEQUENTIAL, INCIDENTAL, OR SPECIAL DAMAGES (INCLUDING,
-*                WITHOUT LIMITATION, DAMAGES FOR LOSS OF PROFITS, BUSINESS INTERRUPTION,
-*                OR LOSS OF INFORMATION) ARISING OUT OF YOUR USE OF OR INABILITY TO USE
-*                THE SOFTWARE, EVEN IF MTI HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH
-*                DAMAGES. Because some jurisdictions prohibit the exclusion or
-*                limitation of liability for consequential or incidental damages, the
+*   Disclaimer   This software code and all associated documentation, comments or other 
+*  of Warranty:  information (collectively "Software") is provided "AS IS" without 
+*                warranty of any kind. MICRON TECHNOLOGY, INC. ("MTI") EXPRESSLY 
+*                DISCLAIMS ALL WARRANTIES EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED 
+*                TO, NONINFRINGEMENT OF THIRD PARTY RIGHTS, AND ANY IMPLIED WARRANTIES 
+*                OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR PURPOSE. MTI DOES NOT 
+*                WARRANT THAT THE SOFTWARE WILL MEET YOUR REQUIREMENTS, OR THAT THE 
+*                OPERATION OF THE SOFTWARE WILL BE UNINTERRUPTED OR ERROR-FREE. 
+*                FURTHERMORE, MTI DOES NOT MAKE ANY REPRESENTATIONS REGARDING THE USE OR 
+*                THE RESULTS OF THE USE OF THE SOFTWARE IN TERMS OF ITS CORRECTNESS, 
+*                ACCURACY, RELIABILITY, OR OTHERWISE. THE ENTIRE RISK ARISING OUT OF USE 
+*                OR PERFORMANCE OF THE SOFTWARE REMAINS WITH YOU. IN NO EVENT SHALL MTI, 
+*                ITS AFFILIATED COMPANIES OR THEIR SUPPLIERS BE LIABLE FOR ANY DIRECT, 
+*                INDIRECT, CONSEQUENTIAL, INCIDENTAL, OR SPECIAL DAMAGES (INCLUDING, 
+*                WITHOUT LIMITATION, DAMAGES FOR LOSS OF PROFITS, BUSINESS INTERRUPTION, 
+*                OR LOSS OF INFORMATION) ARISING OUT OF YOUR USE OF OR INABILITY TO USE 
+*                THE SOFTWARE, EVEN IF MTI HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH 
+*                DAMAGES. Because some jurisdictions prohibit the exclusion or 
+*                limitation of liability for consequential or incidental damages, the 
 *                above limitation may not apply to you.
 *
 *                Copyright 2003 Micron Technology, Inc. All rights reserved.
@@ -55,7 +55,7 @@
     parameter TQSH             =    0.40; // tQSH       tCK   DQS Output High Pulse Width
     parameter TQSL             =    0.40; // tQSL       tCK   DQS Output Low Pulse Width
     parameter TDIPW            =     280; // tDIPW      ps    DQ and DM input Pulse Width
-    parameter TIPW             =     470; // tIPW       ps    Control and Address input Pulse Width
+    parameter TIPW             =     470; // tIPW       ps    Control and Address input Pulse Width  
     parameter TIS              =      35; // tIS        ps    Input Setup Time
     parameter TIH              =      75; // tIH        ps    Input Hold Time
     parameter TRAS_MIN         =   33000; // tRAS       ps    Minimum Active to Precharge command time
@@ -95,7 +95,7 @@
     parameter TQSH             =    0.40; // tQSH       tCK   DQS Output High Pulse Width
     parameter TQSL             =    0.40; // tQSL       tCK   DQS Output Low Pulse Width
     parameter TDIPW            =     280; // tDIPW      ps    DQ and DM input Pulse Width
-    parameter TIPW             =     470; // tIPW       ps    Control and Address input Pulse Width
+    parameter TIPW             =     470; // tIPW       ps    Control and Address input Pulse Width  
     parameter TIS              =      35; // tIS        ps    Input Setup Time
     parameter TIH              =      75; // tIH        ps    Input Hold Time
     parameter TRAS_MIN         =   33000; // tRAS       ps    Minimum Active to Precharge command time
@@ -135,7 +135,7 @@
     parameter TQSH             =    0.40; // tQSH       tCK   DQS Output High Pulse Width
     parameter TQSL             =    0.40; // tQSL       tCK   DQS Output Low Pulse Width
     parameter TDIPW            =     280; // tDIPW      ps    DQ and DM input Pulse Width
-    parameter TIPW             =     470; // tIPW       ps    Control and Address input Pulse Width
+    parameter TIPW             =     470; // tIPW       ps    Control and Address input Pulse Width  
     parameter TIS              =      35; // tIS        ps    Input Setup Time
     parameter TIH              =      75; // tIH        ps    Input Hold Time
     parameter TRAS_MIN         =   33000; // tRAS       ps    Minimum Active to Precharge command time
@@ -175,7 +175,7 @@
     parameter TQSH             =    0.40; // tQSH       tCK   DQS Output High Pulse Width
     parameter TQSL             =    0.40; // tQSL       tCK   DQS Output Low Pulse Width
     parameter TDIPW            =     320; // tDIPW      ps    DQ and DM input Pulse Width
-    parameter TIPW             =     535; // tIPW       ps    Control and Address input Pulse Width
+    parameter TIPW             =     535; // tIPW       ps    Control and Address input Pulse Width  
     parameter TIS              =      50; // tIS        ps    Input Setup Time
     parameter TIH              =     100; // tIH        ps    Input Hold Time
     parameter TRAS_MIN         =   34000; // tRAS       ps    Minimum Active to Precharge command time
@@ -215,7 +215,7 @@
     parameter TQSH             =    0.40; // tQSH       tCK   DQS Output High Pulse Width
     parameter TQSL             =    0.40; // tQSL       tCK   DQS Output Low Pulse Width
     parameter TDIPW            =     320; // tDIPW      ps    DQ and DM input Pulse Width
-    parameter TIPW             =     535; // tIPW       ps    Control and Address input Pulse Width
+    parameter TIPW             =     535; // tIPW       ps    Control and Address input Pulse Width  
     parameter TIS              =      50; // tIS        ps    Input Setup Time
     parameter TIH              =     100; // tIH        ps    Input Hold Time
     parameter TRAS_MIN         =   34000; // tRAS       ps    Minimum Active to Precharge command time
@@ -255,7 +255,7 @@
     parameter TQSH             =    0.40; // tQSH       tCK   DQS Output High Pulse Width
     parameter TQSL             =    0.40; // tQSL       tCK   DQS Output Low Pulse Width
     parameter TDIPW            =     320; // tDIPW      ps    DQ and DM input Pulse Width
-    parameter TIPW             =     535; // tIPW       ps    Control and Address input Pulse Width
+    parameter TIPW             =     535; // tIPW       ps    Control and Address input Pulse Width  
     parameter TIS              =      50; // tIS        ps    Input Setup Time
     parameter TIH              =     100; // tIH        ps    Input Hold Time
     parameter TRAS_MIN         =   34000; // tRAS       ps    Minimum Active to Precharge command time
@@ -270,8 +270,8 @@
     parameter TWLO             =    7500; // tWLO       ps    Write levelization output delay
     parameter TAA_MIN          =   11770; // TAA        ps    Internal READ command to first data
     parameter CL_TIME          =   11770; // CL         ps    Minimum CAS Latency
-
-
+	
+	
 `elsif sg125E                             // sg125E is equivalent to the JEDEC DDR3-1600 (10-10-10) speed bin
     parameter TCK_MIN          =    1250; // tCK        ps    Minimum Clock Cycle Time
     parameter TJIT_PER         =      70; // tJIT(per)  ps    Period JItter
@@ -297,7 +297,7 @@
     parameter TQSH             =    0.40; // tQSH       tCK   DQS Output High Pulse Width
     parameter TQSL             =    0.40; // tQSL       tCK   DQS Output Low Pulse Width
     parameter TDIPW            =     360; // tDIPW      ps    DQ and DM input Pulse Width
-    parameter TIPW             =     560; // tIPW       ps    Control and Address input Pulse Width
+    parameter TIPW             =     560; // tIPW       ps    Control and Address input Pulse Width  
     parameter TIS              =     170; // tIS        ps    Input Setup Time
     parameter TIH              =     120; // tIH        ps    Input Hold Time
     parameter TRAS_MIN         =   35000; // tRAS       ps    Minimum Active to Precharge command time
@@ -312,10 +312,10 @@
     parameter TWLO             =    7500; // tWLO       ps    Write levelization output delay
     parameter TAA_MIN          =   12500; // TAA        ps    Internal READ command to first data
     parameter CL_TIME          =   12500; // CL         ps    Minimum CAS Latency
-
-
-
-
+	
+	
+	
+	
 `elsif sg125                              // sg125 is equivalent to the JEDEC DDR3-1600 (11-11-11) speed bin
     parameter TCK_MIN          =    1250; // tCK        ps    Minimum Clock Cycle Time
     parameter TJIT_PER         =      70; // tJIT(per)  ps    Period JItter
@@ -341,7 +341,7 @@
     parameter TQSH             =    0.40; // tQSH       tCK   DQS Output High Pulse Width
     parameter TQSL             =    0.40; // tQSL       tCK   DQS Output Low Pulse Width
     parameter TDIPW            =     360; // tDIPW      ps    DQ and DM input Pulse Width
-    parameter TIPW             =     560; // tIPW       ps    Control and Address input Pulse Width
+    parameter TIPW             =     560; // tIPW       ps    Control and Address input Pulse Width  
     parameter TIS              =     170; // tIS        ps    Input Setup Time
     parameter TIH              =     120; // tIH        ps    Input Hold Time
     parameter TRAS_MIN         =   35000; // tRAS       ps    Minimum Active to Precharge command time
@@ -356,7 +356,7 @@
     parameter TWLO             =    7500; // tWLO       ps    Write levelization output delay
     parameter TAA_MIN          =   13750; // TAA        ps    Internal READ command to first data
     parameter CL_TIME          =   13750; // CL         ps    Minimum CAS Latency
-`elsif sg15E // Senior's design choice, modifying it to new 3D-DRAM
+`elsif sg15E                              // sg15E is equivalent to the JEDEC DDR3-1333H (9-9-9) speed bin
     parameter TCK_MIN          =    1500; // tCK        ps    Minimum Clock Cycle Time
     parameter TJIT_PER         =      80; // tJIT(per)  ps    Period JItter
     parameter TJIT_CC          =     160; // tJIT(cc)   ps    Cycle to Cycle jitter
@@ -381,13 +381,13 @@
     parameter TQSH             =    0.40; // tQSH       tCK   DQS Output High Pulse Width
     parameter TQSL             =    0.40; // tQSL       tCK   DQS Output Low Pulse Width
     parameter TDIPW            =     400; // tDIPW      ps    DQ and DM input Pulse Width
-    parameter TIPW             =     620; // tIPW       ps    Control and Address input Pulse Width
+    parameter TIPW             =     620; // tIPW       ps    Control and Address input Pulse Width  
     parameter TIS              =     190; // tIS        ps    Input Setup Time
     parameter TIH              =     140; // tIH        ps    Input Hold Time
-    parameter TRAS_MIN         =   17000; // tRAS       ps    Minimum Active to Precharge command time
-    parameter TRC              =   23000; // tRC        ps    Active to Active/Auto Refresh command time
-    parameter TRCD             =   11000; // tRCD       ps    Active to Read/Write command time
-    parameter TRP              =   7000; // tRP        ps    Precharge command period
+    parameter TRAS_MIN         =   36000; // tRAS       ps    Minimum Active to Precharge command time
+    parameter TRC              =   49500; // tRC        ps    Active to Active/Auto Refresh command time
+    parameter TRCD             =   13500; // tRCD       ps    Active to Read/Write command time
+    parameter TRP              =   13500; // tRP        ps    Precharge command period
     parameter TXP              =    6000; // tXP        ps    Exit power down to a valid command
     parameter TCKE             =    5625; // tCKE       ps    CKE minimum high or low pulse width
     parameter TAON             =     250; // tAON       ps    RTT turn-on from ODTLon reference
@@ -395,7 +395,7 @@
     parameter TWLH             =     195; // tWLH       ps    Hold time of tDQS flop
     parameter TWLO             =    9000; // tWLO       ps    Write levelization output delay
     parameter TAA_MIN          =   13500; // TAA        ps    Internal READ command to first data
-    parameter CL_TIME          =   14000; // CL         ps    Minimum CAS Latency
+    parameter CL_TIME          =   13500; // CL         ps    Minimum CAS Latency
 `elsif sg15                               // sg15 is equivalent to the JEDEC DDR3-1333J (10-10-10) speed bin
     parameter TCK_MIN          =    1500; // tCK        ps    Minimum Clock Cycle Time
     parameter TJIT_PER         =      80; // tJIT(per)  ps    Period JItter
@@ -421,7 +421,7 @@
     parameter TQSH             =    0.40; // tQSH       tCK   DQS Output High Pulse Width
     parameter TQSL             =    0.40; // tQSL       tCK   DQS Output Low Pulse Width
     parameter TDIPW            =     400; // tDIPW      ps    DQ and DM input Pulse Width
-    parameter TIPW             =     620; // tIPW       ps    Control and Address input Pulse Width
+    parameter TIPW             =     620; // tIPW       ps    Control and Address input Pulse Width  
     parameter TIS              =     190; // tIS        ps    Input Setup Time
     parameter TIH              =     140; // tIH        ps    Input Hold Time
     parameter TRAS_MIN         =   36000; // tRAS       ps    Minimum Active to Precharge command time
@@ -461,7 +461,7 @@
     parameter TQSH             =    0.38; // tQSH       tCK   DQS Output High Pulse Width
     parameter TQSL             =    0.38; // tQSL       tCK   DQS Output Low Pulse Width
     parameter TDIPW            =     490; // tDIPW      ps    DQ and DM input Pulse Width
-    parameter TIPW             =     780; // tIPW       ps    Control and Address input Pulse Width
+    parameter TIPW             =     780; // tIPW       ps    Control and Address input Pulse Width  
     parameter TIS              =     275; // tIS        ps    Input Setup Time
     parameter TIH              =     200; // tIH        ps    Input Hold Time
     parameter TRAS_MIN         =   37500; // tRAS       ps    Minimum Active to Precharge command time
@@ -501,7 +501,7 @@
     parameter TQSH             =    0.38; // tQSH       tCK   DQS Output High Pulse Width
     parameter TQSL             =    0.38; // tQSL       tCK   DQS Output Low Pulse Width
     parameter TDIPW            =     490; // tDIPW      ps    DQ and DM input Pulse Width
-    parameter TIPW             =     780; // tIPW       ps    Control and Address input Pulse Width
+    parameter TIPW             =     780; // tIPW       ps    Control and Address input Pulse Width  
     parameter TIS              =     275; // tIS        ps    Input Setup Time
     parameter TIH              =     200; // tIH        ps    Input Hold Time
     parameter TRAS_MIN         =   37500; // tRAS       ps    Minimum Active to Precharge command time
@@ -541,7 +541,7 @@
     parameter TQSH             =    0.38; // tQSH       tCK   DQS Output High Pulse Width
     parameter TQSL             =    0.38; // tQSL       tCK   DQS Output Low Pulse Width
     parameter TDIPW            =     600; // tDIPW      ps    DQ and DM input Pulse Width
-    parameter TIPW             =     900; // tIPW       ps    Control and Address input Pulse Width
+    parameter TIPW             =     900; // tIPW       ps    Control and Address input Pulse Width  
     parameter TIS              =     350; // tIS        ps    Input Setup Time
     parameter TIH              =     275; // tIH        ps    Input Hold Time
     parameter TRAS_MIN         =   37500; // tRAS       ps    Minimum Active to Precharge command time
@@ -581,7 +581,7 @@
     parameter TQSH             =    0.38; // tQSH       tCK   DQS Output High Pulse Width
     parameter TQSL             =    0.38; // tQSL       tCK   DQS Output Low Pulse Width
     parameter TDIPW            =     600; // tDIPW      ps    DQ and DM input Pulse Width
-    parameter TIPW             =     900; // tIPW       ps    Control and Address input Pulse Width
+    parameter TIPW             =     900; // tIPW       ps    Control and Address input Pulse Width  
     parameter TIS              =     350; // tIS        ps    Input Setup Time
     parameter TIH              =     275; // tIH        ps    Input Hold Time
     parameter TRAS_MIN         =   37500; // tRAS       ps    Minimum Active to Precharge command time
@@ -625,8 +625,8 @@
   `elsif sg125
     parameter TRRD             =    7500; // tRRD       ps     (2KB page size) Active bank a to Active bank b command time
     parameter TFAW             =   40000; // tFAW       ps     (2KB page size) Four Bank Activate window
-  `elsif sg15E // Used for Senior Design, modified for 3D-DRAM
-    parameter TRRD             =    3000; // tRRD       ps     (2KB page size) Active bank a to Active bank b command time
+  `elsif sg15E
+    parameter TRRD             =    7500; // tRRD       ps     (2KB page size) Active bank a to Active bank b command time
     parameter TFAW             =   45000; // tFAW       ps     (2KB page size) Four Bank Activate window
   `elsif sg15
     parameter TRRD             =    7500; // tRRD       ps     (2KB page size) Active bank a to Active bank b command time
@@ -688,7 +688,7 @@
     parameter WR_MIN           =       5; // WR         tCK   Minimum Write Recovery
     parameter WR_MAX           =      16; // WR         tCK   Maximum Write Recovery
     parameter BL_MIN           =       4; // BL         tCK   Minimum Burst Length
-    parameter BL_MAX           =       1; // BL         tCK   Minimum Burst Length , MODIFY FOR 1 CYCLE BURST
+    parameter BL_MAX           =       1; // BL         tCK   Minimum Burst Length
     parameter CWL_MIN          =       5; // CWL        tCK   Minimum CAS Write Latency
     parameter CWL_MAX          =      10; // CWL        tCK   Maximum CAS Write Latency
 
@@ -702,7 +702,7 @@
     parameter TCL_ABS_MIN      =    0.43; // tCL        tCK   Maximum Clock Low-Level Pulse Width
     parameter TCKE_TCK         =       3; // tCKE       tCK   CKE minimum high or low pulse width
     parameter TAA_MAX          =   20000; // TAA        ps    Internal READ command to first data
-
+    
     // Data OUT
     parameter TQH              =    0.38; // tQH        ps    DQ output hold time from DQS, DQS#
     // Data Strobe OUT
@@ -787,12 +787,11 @@
     parameter DQ_BITS          =       8; // Set this parameter to control how many Data bits are used       **Same as part bit width**
     parameter DQS_BITS         =       1; // Set this parameter to control how many Dqs bits are used
 `else `define x16
-    // Modifying for 1Gb 1024 3D-DRAM configuration
     parameter DM_BITS          =       2; // Set this parameter to control how many Data Mask bits are used
-    parameter ADDR_BITS        =      20; // MAX Address Bits
-    parameter ROW_BITS         =      16; // Set this parameter to control how many Address bits are used, new use 16 bits
-    parameter COL_BITS         =      4; // Set this parameter to control how many Column bits are used, new use 4 bits
-    parameter DQ_BITS          =      128; // Set this parameter to control how many Data bits are used**Same as part bit width**
+    parameter ADDR_BITS        =      14; // MAX Address Bits
+    parameter ROW_BITS         =      13; // Set this parameter to control how many Address bits are used
+    parameter COL_BITS         =      10; // Set this parameter to control how many Column bits are used
+    parameter DQ_BITS          =      16; // Set this parameter to control how many Data bits are used       **Same as part bit width**
     parameter DQS_BITS         =       2; // Set this parameter to control how many Dqs bits are used
 `endif
 
@@ -822,7 +821,7 @@
     parameter DEBUG            =       1; // Turn on Debug messages
     parameter BUS_DELAY        =       1; // delay in nanoseconds
     parameter RANDOM_OUT_DELAY =       0; // If set to 1, the model will put a random amount of delay on DQ/DQS during reads
-    parameter RANDOM_SEED    = 7116890; //seed value for random generator.
+    parameter RANDOM_SEED      = 711689044; //seed value for random generator.
 
     parameter RDQSEN_PRE       =       2; // DQS driving time prior to first read strobe
     parameter RDQSEN_PST       =       1; // DQS driving time after last read strobe

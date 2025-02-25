@@ -12,11 +12,10 @@
 
 `define COUNTER_WIDTH 5
 `define DEPTH 32
-`include "Usertype.sv"
 
 module issue_FIFO( clk,
                    rst_n,
-                   wen,
+                   wen,              
                    data_in,
                    ren,
                    data_out,
@@ -26,25 +25,17 @@ module issue_FIFO( clk,
                    empty
                    );
 
-import usertype::*;
-
-localparam  ISSUE_FIFO_WIDTH=  $bits(issue_fifo_cmd_in_t);
-
 input clk ;
 input rst_n ;
-input wen ;
-input [ISSUE_FIFO_WIDTH-1:0]data_in ; //{command , addr , bank} [20:17]   [16:3] [2:0]
+input wen ;          
+input [`ISU_FIFO_WIDTH-1:0]data_in ; //{command , addr , bank} [20:17]   [16:3] [2:0]
 input ren ;
 
-
-output [ISSUE_FIFO_WIDTH-1:0]data_out;
-output [ISSUE_FIFO_WIDTH-1:0]data_out_pre;
+output [`ISU_FIFO_WIDTH-1:0]data_out;
+output [`ISU_FIFO_WIDTH-1:0]data_out_pre;
 output full;
 output virtual_full;
 output empty;
-
-import usertype::*;
-
 
 reg write_en ;
 reg empty;
@@ -52,35 +43,26 @@ reg virtual_full,full;
 
 integer i ;
 
-issue_fifo_cmd_in_t buffer[`DEPTH-1:0];
-
+reg [`ISU_FIFO_WIDTH-1:0]buffer[`DEPTH-1:0];
 reg [`COUNTER_WIDTH-1:0]read_counter ;
 reg [`COUNTER_WIDTH-1:0]read_counter_sub1 ;
 reg [`COUNTER_WIDTH-1:0]write_counter ;
 
-issue_fifo_cmd_in_t buf_in ;
+reg [`ISU_FIFO_WIDTH-1:0]buf_in ;
 
-issue_fifo_cmd_in_t data_out;
-issue_fifo_cmd_in_t data_out_pre;
+reg [`ISU_FIFO_WIDTH-1:0]data_out;
+reg [`ISU_FIFO_WIDTH-1:0]data_out_pre;
 
 reg [`COUNTER_WIDTH:0]valid_space;
 
 wire[`COUNTER_WIDTH-1:0]  write_0 = write_counter ;
 
 //test signal
-issue_fifo_cmd_in_t buf0 ;
-issue_fifo_cmd_in_t buf1 ;
-issue_fifo_cmd_in_t buf2 ;
-issue_fifo_cmd_in_t buf3 ;
-issue_fifo_cmd_in_t buf4 ;
-
-always_comb begin:TEST_SIGNALS
-  buf0 = buffer[0] ;
-  buf1 = buffer[1] ;
-  buf2 = buffer[2] ;
-  buf3 = buffer[3] ;
-  buf4 = buffer[4] ;
-end
+wire [`ISU_FIFO_WIDTH-1:0]buf0=buffer[0] ;
+wire [`ISU_FIFO_WIDTH-1:0]buf1=buffer[1] ;
+wire [`ISU_FIFO_WIDTH-1:0]buf2=buffer[2] ;
+wire [`ISU_FIFO_WIDTH-1:0]buf3=buffer[3] ;
+wire [`ISU_FIFO_WIDTH-1:0]buf4=buffer[4] ;
 
 always@(posedge clk) begin
 if(rst_n==0)
@@ -158,3 +140,5 @@ end
 
 
 endmodule
+
+

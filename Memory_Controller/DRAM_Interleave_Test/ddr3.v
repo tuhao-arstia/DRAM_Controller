@@ -128,10 +128,8 @@ module ddr3 (
     `define DQ_PER_DQS DQ_BITS/DQS_BITS
     //`define BANKS      (1<<BA_BITS) //8 banks
 	`define BANKS      1
-    // `define MAX_BITS   (BA_BITS+ROW_BITS+COL_BITS-BL_BITS)
-    `define MAX_BITS   (BA_BITS+ROW_BITS+COL_BITS) // Modify to match, since we have no burst mode
-    // `define MAX_SIZE   (1<<(BA_BITS+ROW_BITS+COL_BITS-BL_BITS))
-    `define MAX_SIZE   (1<<(BA_BITS+ROW_BITS+COL_BITS)) // Modify to match no burst mode
+    `define MAX_BITS   (BA_BITS+ROW_BITS+COL_BITS-BL_BITS)
+    `define MAX_SIZE   (1<<(BA_BITS+ROW_BITS+COL_BITS-BL_BITS))
     `define MEM_SIZE   (1<<MEM_BITS)
     `define MAX_PIPE   4*CL_MAX
 
@@ -436,7 +434,7 @@ module ddr3 (
     reg     [2:0]  ba_in;
     reg     [15:0] addr_in;
     reg     [127:0] dq_in;
-	reg     [DQ_BITS*8-1:0] dq_all_in;      //MODIFY FOR CORRECT BIT WIDTH
+	reg     [8*DQ_BITS-1:0] dq_all_in;      //added
     reg     [63:0] dqs_in;
     reg            odt_in;
 
@@ -506,11 +504,7 @@ module ddr3 (
     bufif1 buf_dqs    [DQS_BITS-1:0] (dqs,     dqs_out_dly,  dqs_out_en_dly & {DQS_BITS{out_en}});
     bufif1 buf_dqs_n  [DQS_BITS-1:0] (dqs_n,   ~dqs_out_dly, dqs_out_en_dly & {DQS_BITS{out_en}});
     bufif1 buf_dq     [DQ_BITS-1:0]  (dq,      dq_out_dly,   dq_out_en_dly  & {DQ_BITS {out_en}});
-
-    // Strange things happening here
-	// bufif1 buf_all_dq [8*DQ_BITS-1:0](dq_all,  dq_all_out_dly,dq_all_out_en_dly  & {8*DQ_BITS {out_en}});
-    assign dq_all =  (dq_all_out_en_dly  & {8*DQ_BITS {out_en}} ) ? dq_all_out_dly : 'z;
-    
+	bufif1 buf_all_dq [8*DQ_BITS-1:0](dq_all,  dq_all_out_dly,dq_all_out_en_dly  & {8*DQ_BITS {out_en}});
     assign tdqs_n = {DQS_BITS{1'bz}};
 
     initial begin // MODIFY THIS, SINCE ONLY SUPPORTS BL=1
@@ -1786,7 +1780,7 @@ module ddr3 (
                 //if (burst_cntr%BL_MIN == 1) begin
 				if (burst_cntr == 1) begin
                 //    memory_write(bank, row, col, memory_data);
-					memory_write(bank, row, col, dq_all_in);  //write 128bits in 1 cycle
+					memory_write(bank, row, col, dq_all_in);  //write 1024bits in 1 cycle
 					if (DEBUG) $display ("%m: at time %t INFO: WRITE @ DQS= bank = %h row = %h col = %h data = %h",$time, bank, row, col, dq_all_in);
                 end
             end
