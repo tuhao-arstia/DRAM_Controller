@@ -81,18 +81,18 @@ void uca_org_t::find_delay()
     // Print out the column access related delays
     // data_arr ->delay_local_data_and_drv;
 
-
-    printf("==============================================\n");
-    printf("tCL delay Components\n");
-    printf("column_decoder = %g\n", data_arr->delay_column_decoder);
-    printf("sense_amp = %g\n", data_arr->delay_sense_amp);
-    printf("column_access_net = %g\n", data_arr->delay_column_access_net);
-    printf("Local data and driver delays = %g\n", data_arr->delay_local_data_and_drv);
-    printf("TSV delays = %g\n", data_arr->delay_TSV_tot);
-    total_access_time = data_arr->delay_local_data_and_drv+data_arr->delay_column_decoder + data_arr->delay_column_access_net + data_arr->delay_column_selectline + data_arr->delay_sense_amp + data_arr->delay_TSV_tot;
+    // printf("==============================================\n");
+    // printf("tCL delay Components\n");
+    // printf("column_decoder = %g\n", data_arr->delay_column_decoder);
+    // printf("sense_amp = %g\n", data_arr->delay_sense_amp);
+    // printf("column_access_net = %g\n", data_arr->delay_column_access_net);
+    // printf("Local data and driver delays = %g\n", data_arr->delay_local_data_and_drv);
+    // printf("TSV delays = %g\n", data_arr->delay_TSV_tot);
+    // total_access_time = data_arr->delay_local_data_and_drv+data_arr->delay_column_decoder /
+    // + data_arr->delay_column_access_net + data_arr->delay_column_selectline + data_arr->delay_sense_amp + data_arr->delay_TSV_tot;
     // Add these value all together and print it out
-    printf("Total column access time = %g\n", total_access_time);
-    printf("==============================================\n");
+    // printf("Total column access time = %g\n", total_access_time);
+    // printf("==============================================\n");
   }
   // Both tag and data lookup happen in parallel
   // and the entire set is sent over the data array h-tree without

@@ -1,0 +1,41 @@
+ Controller:
+    impl: BankLevelController
+    id: Channel 0
+    peak_bandwidth: 25.6000004
+    avg_read_latency_0: 43.4225883
+    read_queue_len_avg_0: 13.3055811
+    write_queue_len_0: 27277
+    queue_len_0: 84971
+    num_other_reqs_0: 0
+    num_write_reqs_0: 500
+    average_bandwidth: 2.94777465
+    read_latency_0: 58056
+    priority_queue_len_avg_0: 0.000230627309
+    row_hits_0: 932
+    priority_queue_len_0: 1
+    row_misses_0: 1
+    row_conflicts_0: 62
+    read_row_misses_0: 1
+    queue_len_avg_0: 19.596632
+    read_row_conflicts_core_0: 32
+    read_row_hits_0: 467
+    write_queue_len_avg_0: 6.29082108
+    read_row_conflicts_0: 32
+    write_row_misses_0: 0
+    worst_bandwidth: 6.14400005
+    write_row_conflicts_0: 30
+    read_queue_len_0: 57693
+    write_row_hits_0: 465
+    read_row_hits_core_0: 467
+    read_row_misses_core_0: 1
+    num_read_reqs_0: 1337
+    Scheduler:
+      impl: FCFS
+    RefreshManager:
+      impl: AllBank
+    RowPolicy:
+      impl: OpenRowPolicy
+    ControllerPlugin:
+      impl: CommandCounter
+    ControllerPlugin:
+      impl: TraceRecorder

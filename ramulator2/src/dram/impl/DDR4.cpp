@@ -8,6 +8,12 @@ namespace Ramulator {
 class DDR4 : public IDRAM, public Implementation {
   RAMULATOR_REGISTER_IMPLEMENTATION(IDRAM, DDR4, "DDR4", "DDR4 Device Model")
 
+  double m_activation_power = 0;
+  double m_precharge_power = 0;
+  double m_read_power = 0;
+  double m_write_power = 0;
+  double m_refresh_power = 0;
+
   public:
     inline static const std::map<std::string, Organization> org_presets = {
       //   name         density   DQ  Ch Ra  Bg Ba  Ro     Co
@@ -67,26 +73,31 @@ class DDR4 : public IDRAM, public Implementation {
 
       //t_CAS, (CACTI3DD 3.783(ns))	   t_RAS	    t_RC	  t_RCD	    t_RP	  t_RRD
       // 4                     , 17      , 23      , 11      , 7      , 3
-      //         name       rate                nBL                      nCL                    nRCD                       nRP               nRAS                 nRC           nWR          nRTP          nCWL(TSV as IO)    nCCDS nCCDL nRRDS nRRDL nWTRS nWTRL nFAW  nRFC nREFI nCS,  tCK_ps
-      {"DDR4_3DDRAM_1024",{1600,                1,                        4,                     1,                         7,                17,                  23,           9,            8,                4,             1,    2,   -1,    -1,   2,     4,  -1,   -1,   -1,  2,   1000}},
+      //         name        rate                nBL                      nCL                    nRCD                       nRP               nRAS                 nRC            nWR          nRTP          nCWL(TSV as IO)    nCCDS nCCDL nRRDS nRRDL nWTRS nWTRL nFAW  nRFC nREFI nCS,  tCK_ps
+      {"DDR4_3DDRAM_1024",  {1600,                1,                       14,                    11,                         7,                17,                  23,           9,            8,                14,             3,    3,   -1,    -1,   2,     4,  -1,   -1,   -1,  2,   1000}},
 
       //t_CAS	   t_RAS	    t_RC	  t_RCD	    t_RP	  t_RRD
       // 8	 "	"	14	 "	"	16	 "	"	13	 "	"	4	 "	"	2	 "
       //            name                rate              nBL            nCL            nRCD          nRP        nRAS            nRC         nWR           nRTP          nCWL  nCCDS nCCDL nRRDS nRRDL nWTRS nWTRL nFAW  nRFC nREFI nCS,  tCK_ps
-      {"DDR4_3DDRAM_128",{       1600,         1,         6,             13,          4,         14,              16,      12,       6,          9,   1,    2,   -1,    -1,   2,     4,  -1,   -1,   -1, 2,    1250}},
+      {"DDR4_3DDRAM_128",{       1600,         1,         6,             13,          4,         14,              16,      12,       6,          9,   1,    2,   -1,    -1,   2,     4,    -1,   -1,   -1,    2,    1250}},
                         //rate    nBL  nCL  nRCD  nRP   nRAS  nRC   nWR  nRTP nCWL nCCD  nRRD  nWTR  nFAW  nRFC nREFI  nCS  tCK_ps
       // The unit is number of tCK_ps, it is 1250 here
       {"DDR4_3DDRAM_512",{1600,   4,   10,   5,   10,    8,   12,   12,    6,   9,   4,  5,   -1,    -1,   2,     6,  -1,   -1,   -1, 2,    1250}}
     };
 
     inline static const std::map<std::string, std::vector<double>> voltage_presets = {
-      //   name          VDD      VPP
-      {"Default",       {1.2,     2.5}},
+      //   name               VDD      VPP
+      {"Default",             {1.2,     2.5}},
+      //   name               VDD      VPP
+      {"3D-DRAM-32nm",       {1.0,     1.5}},
     };
 
     inline static const std::map<std::string, std::vector<double>> current_presets = {
       // name                 IDD0        IDD2N       IDD3N       IDD4R       IDD4W       IDD5B       IPP0      IPP2N  IPP3N  IPP4R  IPP4W  IPP5B
-      {"Default",       {60,   50,     55,     145,    145,    362,     3,    3,     3,     3,     3,     48}},
+      {"Default",             {60,          50,         55,         145,      145,        362,          3,        3,     3,     3,     3,     48}},
+    
+      // name                 IDD0        IDD2N       IDD3N        IDD4R       IDD4W       IDD5B       IPP0      IPP2N  IPP3N  IPP4R  IPP4W  IPP5B
+      {"3D-DRAM-32nm",        {65,          40,         55,         390,        500,        250,        65,        3,     3,     3,     3,     48}}
     };
 
   /************************************************
@@ -378,6 +389,7 @@ class DDR4 : public IDRAM, public Implementation {
           case 8:  return 1;
           case 16: return 2;
           case 128: return 2;
+          case 512: return 2;
           case 1024: return 2;
           default: return -1;
         }
@@ -424,18 +436,20 @@ class DDR4 : public IDRAM, public Implementation {
       }
 
       // Refresh timings
-      // tRFC table (unit is nanosecond!), modify the DRAM timing tRFC according to the density
+      // tRFC table (unit is nanosecond!), modify the DRAM timing tRFC according to the density, 
+      // this should be modified according to the density of the bank 
       constexpr int tRFC_TABLE[3][6] = {
               // 256Mb   1Gb      2Gb      4Gb       8Gb       16Gb
-        { 60,110,160,  260,  360,  550}, // Normal refresh (tRFC1)
-        { 40,80,110,  160,  260,  350}, // FGR 2x (tRFC2)
-        { 20,60,90,   110,  160,  260}, // FGR 4x (tRFC4)
+        {         60,    110,     160,     260,      360,      550}, // Normal refresh (tRFC1)
+        {         40,    80,      110,     160,      260,      350}, // FGR 2x (tRFC2)
+        {         20,    60,      90,      110,      160,      260}, // FGR 4x (tRFC4)
       };
 
-      // tREFI(base) table (unit is nanosecond!)
+      // tREFI(base) table (unit is nanosecond!), this should be modified according to the density of the bank
       int tREFI_BASE =[](int density_Mb) -> int{
         switch (density_Mb) {
           case 256:   return 3900; //From raar, 3.9us, due to the use of 8K refresh
+          case 512:   return 3900;
           case 1024:  return 3900;
           case 2048:  return 7800;
           case 4096:  return 7800;
@@ -450,6 +464,7 @@ class DDR4 : public IDRAM, public Implementation {
           //! This is related to density of bank, the refresh interval, must be modified to reflect
           //! the correct value
           case 256 :  return 0;
+          case 512:   return 1;
           case 1024:  return 1;
           case 2048:  return 2;
           case 4096:  return 3;
@@ -591,8 +606,15 @@ class DDR4 : public IDRAM, public Implementation {
     void set_powers() {
 
       m_drampower_enable = param<bool>("drampower_enable").default_val(false);
-      // m_wr_high_watermark = param<float>("wr_high_watermark").desc("Threshold for switching to write mode.").default_val(0.8f);
+      
       m_structure_type   = param<int>("structure_type").default_val(1);
+
+      // V, mA, pJ/cycle, ref , https://github.com/CMU-SAFARI/VAMPIRE/blob/master/dramSpec/example.cfg
+      m_activation_power = param<double>("activation_power").default_val(0.0); //(nJ)
+      m_precharge_power  = param<double>("precharge_power").default_val(0.0);
+      m_read_power       = param<double>("read_power").default_val(0.0);
+      m_write_power      = param<double>("write_power").default_val(0.0);
+      m_refresh_power    = param<double>("refresh_power").default_val(0.0);
 
       if (!m_drampower_enable)
         return;
@@ -702,10 +724,11 @@ class DDR4 : public IDRAM, public Implementation {
 
       rank_stats.pre_background_energy = (VE("VDD") * CE("IDD2N") + VE("VPP") * CE("IPP2N"))
                                             * rank_stats.idle_cycles * tCK_ns / 1E3;
-      double energy_per_act = 0;
-      double energy_per_pre = 0;
-      double energy_per_rd = 0;
-      double energy_per_wr = 0;
+                                          
+      double energy_per_act = m_activation_power;
+      double energy_per_pre = m_precharge_power;
+      double energy_per_rd = m_read_power;
+      double energy_per_wr = m_write_power;
 
       // Energy due to commands, refer to DRAMPower and VAMPIRE for the energy calculation
       ref_cmd_energy  = (VE("VDD") * (CE("IDD5B")) + VE("VPP") * (CE("IPP5B")))
@@ -725,18 +748,10 @@ class DDR4 : public IDRAM, public Implementation {
                                * rank_stats.cmd_counters[m_cmds_counted("WR")] * TS("nBL") * tCK_ns / 1E3;
           break;
         case 1:
-          //"1Gb_x128, 4 layers, each 256Mb"
-          //Power Components:
-	        //  Activation energy: 1.49164 nJ
-	        //  Read energy: 5.8933 nJ
-	        //  Write energy: 5.89333 nJ
-	        //  Precharge energy: 1.38858 nJ
-          //Activation energy,Precharge energy,Read energy,Write energy
-          //1.08691,1.00571,0.819486,0.81949(CACTI-3DD)
-          energy_per_act = 1.49164 * 1000; // orginal energy + tsv energy
-          energy_per_pre = 1.3886 * 1000;
-          energy_per_rd  = 5.8933 * 1000;
-          energy_per_wr  = 5.8933 * 1000;
+          energy_per_act =   energy_per_act * 1000; // orginal energy + tsv energy, energy is pJ
+          energy_per_pre =   energy_per_pre * 1000;
+          energy_per_rd  =   energy_per_rd  * 1000;
+          energy_per_wr  =   energy_per_wr  * 1000;
 
           act_cmd_energy  = energy_per_act
            * rank_stats.cmd_counters[m_cmds_counted("ACT")] * TS("nRAS") * tCK_ns / 1E3;
@@ -759,11 +774,11 @@ class DDR4 : public IDRAM, public Implementation {
                                     + wr_cmd_energy
                                     + ref_cmd_energy;
 
-      std::cerr << "act_cmd_energy: " << act_cmd_energy << std::endl;
-      std::cerr << "pre_cmd_energy: " << pre_cmd_energy << std::endl;
-      std::cerr << "rd_cmd_energy: " << rd_cmd_energy << std::endl;
-      std::cerr << "wr_cmd_energy: " << wr_cmd_energy << std::endl;
-      std::cerr << "ref_cmd_energy: " << ref_cmd_energy << std::endl;
+      // std::cerr << "act_cmd_energy: " << act_cmd_energy << std::endl;
+      // std::cerr << "pre_cmd_energy: " << pre_cmd_energy << std::endl;
+      // std::cerr << "rd_cmd_energy: " << rd_cmd_energy << std::endl;
+      // std::cerr << "wr_cmd_energy: " << wr_cmd_energy << std::endl;
+      // std::cerr << "ref_cmd_energy: " << ref_cmd_energy << std::endl;
 
       rank_stats.total_energy = rank_stats.total_background_energy + rank_stats.total_cmd_energy;
 

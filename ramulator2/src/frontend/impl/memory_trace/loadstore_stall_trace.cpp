@@ -6,6 +6,8 @@
 
 #include "base/exception.h"
 #include "base/request.h"
+#include "base/base.h"
+
 #include "frontend/frontend.h"
 #include "loadstore_stall_trace.h"
 
@@ -13,8 +15,21 @@ namespace Ramulator
 {
   namespace fs = std::filesystem;
 
+  bool   m_wait_write_req_burst = false;
+
+  int    m_write_req_delay_cycle = 1; // Write burst cycle delay
+
+  size_t    m_received_request_in_interval  = 0;
+  size_t    m_total_received_request = 0;
+  float  s_peak_bandwidth    = -1;
+  float  s_worst_bandwidth   = INFINITY;
+  float  s_average_bandwidth = -1;
+  int    m_bandwidth_sample_time_interval = 500;
+  int    m_read_datapath_width = 1024;
+  std::string m_bandwidth_trace_file_path = "";
+
   LoadStoreStallCore::LoadStoreStallCore(int clk_ratio, int core_id, size_t num_expected_traces, std::string trace_path_str
-  ,std::string returned_trace_path_str,bool is_debug)
+  ,std::string returned_trace_path_str,bool is_debug,int bandwidth_sample_time_interval, int read_datapath_width,std::string bandwidth_trace_file_path)
   {
     m_is_debug = is_debug;
     m_num_expected_traces = num_expected_traces;
@@ -23,7 +38,11 @@ namespace Ramulator
     m_callback = [this](Request &req)
     { return this->receive(req); }; // Check to see if the request comes back
     init_trace(trace_path_str, returned_trace_path_str);
+    // Statistics for bandwidth analysis
     m_returned_trace_file_path_str = returned_trace_path_str;
+    m_bandwidth_sample_time_interval = bandwidth_sample_time_interval;
+    m_read_datapath_width = read_datapath_width; // in bits
+    m_bandwidth_trace_file_path = bandwidth_trace_file_path;
   };
 
   void LoadStoreStallCore::tick()
@@ -42,8 +61,22 @@ namespace Ramulator
       return;
     }
 
+    // write delay
+    // if(m_write_req_delay_cycle > 0 && m_wait_write_req_burst == true){
+    //   m_write_req_delay_cycle--;
+    //   return;
+    // }
+
     // Send another request
     const Trace &t = m_trace[m_curr_trace_idx];
+
+    // Exception, check if the num of expected traces is less than the actual traces
+    // Size of m_trace  
+    if(m_num_expected_traces > m_trace.size())
+    {
+      throw ConfigurationError("Number of expected traces exceed the actual number of traces");
+    }
+
 
     // addr, type, callback
     Request request(t.addr, t.is_write ? Request::Type::Write : Request::Type::Read, m_core_id,m_callback);
@@ -59,19 +92,37 @@ namespace Ramulator
       m_curr_trace_idx++;
       m_trace_count++;
     }
+
+    // Bandwidth statistics
+    if(m_clk % m_bandwidth_sample_time_interval == 0)
+    {
+      // Total Received data / Time = (Data bit width*Requests)/Time
+      float bandwidth = (float(m_received_request_in_interval*m_read_datapath_width)/float(8))/float(m_bandwidth_sample_time_interval); // in bytes
+      if(s_peak_bandwidth < bandwidth)
+        s_peak_bandwidth = bandwidth;
+      if(s_worst_bandwidth > bandwidth)
+        s_worst_bandwidth = bandwidth;
+
+      m_received_request_in_interval = 0;
+
+      // if(m_is_debug)
+        // std::cerr << "Bandwidth at " << m_clk << " clk cycle is " << bandwidth << " G_bytes" << std::endl;
+    }
   };
 
   void LoadStoreStallCore::receive(Request &req)
   {
     // print Receive the request at clk cycle addr and core id
-    if(m_is_debug)
-      std::cerr << req.type_id <<"request received at " << m_clk << " clk cycle addr " << req.addr << " and core id " << m_core_id << std::endl;
-
-    m_waiting_for_request = false;
+    // if(m_is_debug)
+      // std::cerr << req.type_id <<"request received at " << m_clk << " clk cycle addr " << req.addr << " and core id " << m_core_id << std::endl;
 
     // Write the request to the returned trace file in the following format
     // clk, request address, core id
     m_returned_trace_file << m_clk << " " << req.addr << " " << m_core_id << std::endl;
+
+    // Staistics, calculate the bandwidth, and display on the screen
+    m_received_request_in_interval++;
+    m_total_received_request++;
 
     m_num_retired_traces++;
   };
@@ -156,11 +207,34 @@ namespace Ramulator
     std::ofstream returned_trace_file(returned_trace_path / fs::path("returned_request_trace_"+std::to_string(m_core_id) + ".txt"));
     // store it to the variable
     m_returned_trace_file = std::move(returned_trace_file);
+
+    // Create a bandwidth trace file
+    std::ofstream bandwidth_trace_file(returned_trace_path / fs::path("bandwidth_trace_"+std::to_string(m_core_id) + ".txt"));
+    // store it to the variable
+    m_bandwidth_trace_file = std::move(bandwidth_trace_file);
   };
 
+  float LoadStoreStallCore::get_peak_bandwidth()
+  {
+    return s_peak_bandwidth;
+  };
+
+  float LoadStoreStallCore::get_worst_bandwidth()
+  {
+    return s_worst_bandwidth;
+  };
+
+  float LoadStoreStallCore::get_average_bandwidth()
+  {
+    return s_average_bandwidth;
+  };
+
+  
   // TODO: FIXME
   bool LoadStoreStallCore::is_finished()
-    {
+    { 
+      // Total Received data / Time = (Data bit width*Requests)/Time
+      s_average_bandwidth = float(float(m_total_received_request * m_read_datapath_width)/float(8))/float(m_clk); // in bytes
       // If the core retired enough request, it is finished
       return m_num_retired_traces>=m_num_expected_traces;
     };

@@ -43,6 +43,7 @@ MemorySystem:
       rank: 1
     timing:
       preset: DDR4_3DDRAM_128
+      nRCD: 10  # 這裡的值會被腳本修改
 
   Controller:
     impl: Generic

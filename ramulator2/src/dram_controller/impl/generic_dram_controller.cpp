@@ -12,7 +12,7 @@ class GenericDRAMController final : public IDRAMController,
                                     public Implementation {
   //
   RAMULATOR_REGISTER_IMPLEMENTATION(IDRAMController, GenericDRAMController,
-                                    "Generic", "A generic DRAM controller.");
+                                    "GenericController", "A generic DRAM controller.");
 
 private:
   std::deque<Request> pending; // A queue for read requests that are about to
@@ -26,8 +26,10 @@ private:
                                // highest priority
   ReqBuffer m_priority_buffer; // Buffer for high-priority requests (e.g.,
                                // maintenance like refresh).
+
   ReqBuffer m_read_buffer;     // Read request buffer
   ReqBuffer m_write_buffer;    // Write request buffer
+  ReqBuffer m_unified_req_buffer; // Unified request buffer(Both rd,wr now shares the same buffer)
 
   int m_bank_addr_idx = -1;
   IMemorySystem *m_memory_system;
@@ -35,6 +37,8 @@ private:
   float m_wr_low_watermark;
   float m_wr_high_watermark;
   bool m_is_write_mode = false;
+
+  bool m_is_debug = false;
 
   Clk_t m_sample_time = 0;
   int m_interval_served_requests = 0;
@@ -90,6 +94,10 @@ public:
     m_sample_time = param<Clk_t>("sample_time")
                        .desc("The time interval to sample the statistics.")
                        .default_val(2000);
+
+    m_is_debug = param<bool>("is_debug")
+                    .desc("Enable debug mode for the controller.")
+                    .default_val(false);
 
     bandwidth_record_file_dir = param<std::string>("bandwidth_record_file")
                             .desc("The file to record the bandwidth statistics.")
@@ -206,14 +214,9 @@ public:
     // Else, enqueue them to corresponding buffer based on request type id
     bool is_success = false;
     req.arrive = m_clk;
-    if (req.type_id == Request::Type::Read) {
-      // m_logger->debug("Enqueueing read request at Clk={}, Addr={}, Type={}",
-      //                 m_clk, req.addr, req.type_id);
-      is_success = m_read_buffer.enqueue(req);
-    } else if (req.type_id == Request::Type::Write) {
-      // m_logger->debug("Enqueueing write request at Clk={}, Addr={}, Type={}",
-      //                 m_clk, req.addr, req.type_id);
-      is_success = m_write_buffer.enqueue(req);
+    //! TODO: To be modified to use only one buffer
+    if (req.type_id == Request::Type::Read || req.type_id == Request::Type::Write) {
+      is_success = m_unified_req_buffer.enqueue(req);
     } else {
       throw std::runtime_error("Invalid request type!");
     }
@@ -238,9 +241,9 @@ public:
     m_clk++;
 
     // Update statistics
-    s_queue_len += m_read_buffer.size() + m_write_buffer.size() +
+    s_queue_len += m_unified_req_buffer.size() +
                    m_priority_buffer.size() + pending.size();
-    s_read_queue_len += m_read_buffer.size() + pending.size();
+    s_read_queue_len += m_unified_req_buffer.size() + pending.size();
     s_write_queue_len += m_write_buffer.size();
     s_priority_queue_len += m_priority_buffer.size();
 
@@ -288,7 +291,8 @@ public:
       }
     }
 
-    // Bandwidth calculation
+    // Bandwidth calculation, the bandwidth calculation stems from the time read is sent to dram
+    // from the memory controller, and the time it returns back to the memory controller
     if(m_clk % m_sample_time == 0 && m_clk != 0) {
       float _bandwidth = float(m_interval_served_requests * 128) / float(m_sample_time);
 
@@ -301,6 +305,18 @@ public:
       bandwidth_sequence.push_back(_bandwidth);
 
       m_interval_served_requests = 0;
+    }
+
+    // Debugging
+    if (m_is_debug) {
+      // display the entries of the unified buffer
+      std::cerr << "Unified Buffer: ";
+      // display its req addr and its req type, source id
+      for (auto &req : m_unified_req_buffer) {
+        std::cerr << req.addr << " " << req.type_id << " " << req.source_id
+                  << " | ";
+      }
+      std::cerr << std::endl;
     }
   };
 
@@ -406,7 +422,7 @@ private:
    * @brief    Checks if we need to switch to write mode
    *
    */
-  void set_write_mode() {
+  void set_write_mode() { //! This is not needed for the single buffer implementation
     if (!m_is_write_mode) {
       if ((m_write_buffer.size() >
            m_wr_high_watermark * m_write_buffer.max_size) ||
@@ -430,6 +446,7 @@ private:
     bool request_found = false;
     // 2.1    First, check the act buffer to serve requests that are already
     // activating (avoid useless ACTs)
+    // This get_best_request is for scheduling the requests
     if (req_it = m_scheduler->get_best_request(m_active_buffer);
         req_it != m_active_buffer.end()) {
       if (m_dram->check_ready(req_it->command, req_it->addr_vec)) {
@@ -456,11 +473,12 @@ private:
       }
 
       // 2.2.1    If no request to be scheduled in the priority buffer, check
-      // the read and write buffers.
+      // the read and write buffers
+      //! TODO: To be modified to use only one buffer
       if (!request_found) {
         // Query the write policy to decide which buffer to serve
-        set_write_mode();
-        auto &buffer = m_is_write_mode ? m_write_buffer : m_read_buffer;
+        // set_write_mode(); // no need for unified buffer implementation
+        auto &buffer = m_unified_req_buffer; //modify this to use only one single buffer
         if (req_it = m_scheduler->get_best_request(buffer);
             req_it != buffer.end()) {
           request_found =

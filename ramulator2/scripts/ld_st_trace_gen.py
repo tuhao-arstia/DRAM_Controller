@@ -1,7 +1,7 @@
 import random
 from math import log2
 
-def generate_st_ld_trace(filename,filename2,pattern_type,num_lines,gen_stall,load_store_switch_threshold):
+def generate_st_ld_trace(filename,filename2,pattern_type,num_lines,gen_stall,load_store_switch_threshold,gen_load_store_pattern = False):
     address = 0
     switch_cnt = 0
     threshold = 5
@@ -32,9 +32,9 @@ def generate_st_ld_trace(filename,filename2,pattern_type,num_lines,gen_stall,loa
 
     with open(filename, 'w') as file,open(filename2,'w') as file2:
         for line in range(num_lines):
-            if pattern_type != 'read_write_interleave_same_row':
+            if pattern_type != 'read_write_interleave_same_row' and gen_load_store_pattern == True:
                 if operation == 'LD' and line != 0:
-                    if (line % load_store_switch_threshold*10) == 0:
+                    if (line % load_store_switch_threshold*5) == 0:
                         operation = 'ST'
                 elif operation == 'ST' and line != 0:
                     if (line % load_store_switch_threshold) == 0:
@@ -67,18 +67,18 @@ def generate_st_ld_trace(filename,filename2,pattern_type,num_lines,gen_stall,loa
                     operation = 'ST'
 
                 # Randomly picks different channel, pick from 0~3
-                gen_channel_num = random.randint(0, num_of_channels-1)
+                gen_channel_num = 0
                 gen_row_bits    = 0
                 # Make it a walking pattern
                 gen_column_bits = 0
                 gen_byte_bits   = 0
-            elif(pattern_type=='ideal_sequential_gen_channel'):
+            elif(pattern_type=='ideal_sequential_gen_channel'): # 
                 gen_channel_num = line % num_of_channels
                 gen_row_bits    = 0
                 gen_column_bits = 0
                 gen_byte_bits   = 0
             else: #Ideal sequential
-                gen_channel_num = 1
+                gen_channel_num = 0
                 gen_row_bits    = (line // column_partitions) % row_size
                 # Walking pattern
                 gen_column_bits = line % column_partitions
@@ -101,12 +101,13 @@ def generate_st_ld_trace(filename,filename2,pattern_type,num_lines,gen_stall,loa
                 file2.write("{0} {1} {2} {3}\n".format(gen_channel_num,gen_row_bits,gen_column_bits,gen_byte_bits))
 
 # Parameters
-num_traces = 64
-num_lines = 2000
+num_traces = 1
+num_lines = 30000
 trace_file_dir = "../traces/"
 gen_stall = True
 pattern_type = ''
-load_store_switch_threshold = 100000
+load_store_switch_threshold = 100
+gen_load_store_pattern = False
 
 random.seed(0)
 
@@ -125,6 +126,6 @@ for i in range(num_traces):
 
         filename = f"{trace_file_dir}_{pattern_type}_trace_{i}.txt"
         filename2 = f"{trace_file_dir}_{pattern_type}_trace_{i}_address.txt"
-        generate_st_ld_trace(filename,filename2,pattern_type,num_lines,gen_stall,load_store_switch_threshold = load_store_switch_threshold)
+        generate_st_ld_trace(filename,filename2,pattern_type,num_lines,gen_stall,load_store_switch_threshold = load_store_switch_threshold,gen_load_store_pattern = gen_load_store_pattern)
         print(f"Generated trace file: {filename}")
         print(f"Generated trace file: {filename2}")

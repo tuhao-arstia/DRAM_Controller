@@ -1,7 +1,7 @@
 Frontend:
   impl: LoadStoreStallTrace
   clock_ratio: 3
-  num_expected_insts: 10
+  num_expected_insts: 1000
   returned_trace_path: ../returned_trace/
   debug: false
   traces:

@@ -49,18 +49,27 @@ namespace Ramulator
     // a return trace file
     std::ofstream m_returned_trace_file;
 
+    // Bandwidth trace
+    std::ofstream m_bandwidth_trace_file;
+
   public:
     // callback
     std::function<void(Request &)> m_callback;
 
-    LoadStoreStallCore(int clk_ratio, int core_id, size_t num_expected_traces, std::string trace_path_str,
-    std::string returned_trace_path_str, bool is_debug);
+    LoadStoreStallCore(int clk_ratio, int core_id, size_t num_expected_traces, std::string trace_path_str
+      ,std::string returned_trace_path_str,bool is_debug,int bandwidth_sample_time_interval, int read_datapath_width,std::string bandwidth_trace_file_path);
 
     void tick();
 
     void receive(Request &req);
 
     void connect_memory_system(IMemorySystem *memory_system);
+
+    float get_peak_bandwidth();
+
+    float get_worst_bandwidth();
+
+    float get_average_bandwidth();
 
   private:
     void init_trace(const std::string &file_path_str, const std::string &returned_trace_path_str);

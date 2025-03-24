@@ -204,6 +204,7 @@ UCA::UCA(const DynamicParameter & dyn_p)
 		//precharge_energy *= g_ip->num_tier_row_sprd * g_ip->num_tier_col_sprd;
 		break;
 	case 3://Fine_bank_level:
+		// delay_TSV_tot = tsv_os_bank.delay;
 		delay_TSV_tot = (g_ip->num_die_3d) * tsv_os_bank.delay;
 		num_TSV_tot = (comm_bits + row_add_bits + col_add_bits + data_bits) * g_ip->nbanks *g_ip->ndwl *g_ip->ndbl
 		/g_ip->num_tier_col_sprd /g_ip->num_tier_row_sprd * (1 + redundancy_perc_TSV);
@@ -301,7 +302,7 @@ UCA::UCA(const DynamicParameter & dyn_p)
 		cout<<"	Activation energy: "<<activate_energy * 1e9  << " nJ" <<endl;
 		cout<<"	Read energy: "<<read_energy * 1e9  << " nJ" <<endl;
 		cout<<"	Write energy: "<<write_energy * 1e9  << " nJ" <<endl;
-		//cout<<"	Precharge energy: "<<precharge_energy * 1e9  << " nJ" <<endl;
+		cout<<"	Precharge energy: "<<precharge_energy * 1e9  << " nJ" <<endl;
 		cout<<"	Activation power: "<< activate_power * 1e3   << " mW" <<endl;
 		cout<<"	Read power: "<< read_power * 1e3 << " mW" <<endl;
 		cout<<"	Write power: "<< write_power * 1e3  << " mW" <<endl;
