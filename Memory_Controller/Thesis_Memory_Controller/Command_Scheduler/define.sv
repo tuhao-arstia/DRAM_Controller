@@ -13,6 +13,8 @@
 `define  CMD_DESELECT       5'b11111
 `define  CMD_POWER_DOWN     5'b01111
 `define  CMD_SELF_REFLESH	  5'b00001
+`define  CMD_READA          5'b10101
+`define  CMD_WRITEA         5'b10100
 
 
 //command state naming
@@ -90,18 +92,18 @@ time paramemters
 `define CYCLE_TXPR 81
 `define CYCLE_TMRD 9  //tMRD = 4 cycles   (4-1) * 3 <- LMR0~LMR3 total waiting time
 `define CYCLE_TDLLK 512
-`define CYCLE_TRCD 4  //tRCD = 5 cycles, new timing 11000(ps) / 3000(ps) = 4
-`define CYCLE_TRC  8 //tRC = 17 cycles, new timing 23000(ps) / 3000(ps) = 8
-`define CYCLE_TCCD 4  //tCCD = 4 cycles, same
+`define CYCLE_TRCD 11  //tRCD = 5 cycles, new timing 11000(ps) / 3000(ps) = 4
+`define CYCLE_TRC  23 //tRC = 17 cycles, new timing 23000(ps) / 3000(ps) = 8
+`define CYCLE_TCCD 3  //tCCD = 3 cycles, same
 `define CYCLE_TCL  5  //tCL = CAS Latency, new timing is 14000/3000 = 5
 `define CYCLE_TCWL 5  //tCWL = CAS write Latency
-`define CYCLE_TWR  5  //tWR = Write Recovery
+`define CYCLE_TWR  9  //tWR = Write Recovery
 `define CYCLE_TAL  0  //tAL = Additional Latency  set AL = CL-2  CYCLE_TAL = AL - 1
 `define CYCLE_TRRD 4  //tRRD = Active BANK A to Active BANK B min. latency round((7500ps/3000ps))=3
 `define CYCLE_TFAW 15 //tFAW = Four Bank Active window (45000ps/3000ps)=15
-`define CYCLE_TRTP 4  //tRTP = Read to precharge command delay round((7500ps/3000ps))=3
-`define CYCLE_TRP  3  //tRP = precharge period round((13500ps/3000ps))=5, new timing is 7000/3000 = 3
-`define CYCLE_TRAS 12 //tRAS = active-to-precharge the same bank latency.  round(36000ps/3000ps)=12
+`define CYCLE_TRTP 8  //tRTP = Read to precharge command delay round((7500ps/3000ps))=3
+`define CYCLE_TRP  7  //tRP = precharge period round((13500ps/3000ps))=5, new timing is 7000/3000 = 3
+`define CYCLE_TRAS 17 //tRAS = active-to-precharge the same bank latency.  round(36000ps/3000ps)=12
 `define CYCLE_TOTAL_WL 5   //CWL + AL
 `define CYCLE_TOTAL_RL 5   //CL + AL
 
@@ -230,7 +232,7 @@ bit width definations
 
 `define OUT_FIFO_WIDTH  2 //{read/write,Burst_Length} ;
 
-`define WDATA_FIFO_WIDTH `DQ_BITS*8+1//{wdata,burst_length}
+`define WDATA_FIFO_WIDTH `DQ_BITS*8//{wdata,burst_length}
 //------------------------------
 //for bank FSM process
 //------------------------------

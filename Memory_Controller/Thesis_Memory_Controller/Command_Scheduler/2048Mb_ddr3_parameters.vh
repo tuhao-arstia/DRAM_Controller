@@ -357,7 +357,7 @@
     parameter TAA_MIN          =   13750; // TAA        ps    Internal READ command to first data
     parameter CL_TIME          =   13750; // CL         ps    Minimum CAS Latency
 `elsif sg15E // Senior's design choice, modifying it to new 3D-DRAM
-    parameter TCK_MIN          =    1500; // tCK        ps    Minimum Clock Cycle Time
+    parameter TCK_MIN          =    1000; // tCK        ps    Minimum Clock Cycle Time
     parameter TJIT_PER         =      80; // tJIT(per)  ps    Period JItter
     parameter TJIT_CC          =     160; // tJIT(cc)   ps    Cycle to Cycle jitter
     parameter TERR_2PER        =     118; // tERR(2per) ps    Accumulated Error (2-cycle)
@@ -386,8 +386,8 @@
     parameter TIH              =     140; // tIH        ps    Input Hold Time
     parameter TRAS_MIN         =   17000; // tRAS       ps    Minimum Active to Precharge command time
     parameter TRC              =   23000; // tRC        ps    Active to Active/Auto Refresh command time
-    parameter TRCD             =   11000; // tRCD       ps    Active to Read/Write command time
-    parameter TRP              =   7000; // tRP        ps    Precharge command period
+    parameter TRCD             =   11000; // tRCD       ps    Active to Read/Write command time, 11000
+    parameter TRP              =    7000; // tRP        ps    Precharge command period
     parameter TXP              =    6000; // tXP        ps    Exit power down to a valid command
     parameter TCKE             =    5625; // tCKE       ps    CKE minimum high or low pulse width
     parameter TAON             =     250; // tAON       ps    RTT turn-on from ODTLon reference
@@ -395,7 +395,7 @@
     parameter TWLH             =     195; // tWLH       ps    Hold time of tDQS flop
     parameter TWLO             =    9000; // tWLO       ps    Write levelization output delay
     parameter TAA_MIN          =   13500; // TAA        ps    Internal READ command to first data
-    parameter CL_TIME          =   14000; // CL         ps    Minimum CAS Latency
+    parameter CL_TIME          =   14000; // CL         ps    Minimum CAS Latency, 14000
 `elsif sg15                               // sg15 is equivalent to the JEDEC DDR3-1333J (10-10-10) speed bin
     parameter TCK_MIN          =    1500; // tCK        ps    Minimum Clock Cycle Time
     parameter TJIT_PER         =      80; // tJIT(per)  ps    Period JItter
@@ -717,7 +717,7 @@
     parameter TZQCS            =      64; // tZQCS      tCK   ZQ Cal (Short) time
     parameter TZQINIT          =     512; // tZQinit    tCK   ZQ Cal (Long) time
     parameter TZQOPER          =     256; // tZQoper    tCK   ZQ Cal (Long) time
-    parameter TCCD             =       4; // tCCD       tCK   Cas to Cas command delay
+    parameter TCCD             =       3; // tCCD       tCK   Cas to Cas command delay
     parameter TCCD_DG          =       2; // tCCD_DG    tCK   Cas to Cas command delay to different group
     parameter TRAS_MAX         =    60e9; // tRAS       ps    Maximum Active to Precharge command time
     parameter TWR              =   15000; // tWR        ps    Write recovery time

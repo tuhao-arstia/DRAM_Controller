@@ -1,0 +1,20 @@
+set company "iclab"
+set desinger "Student"
+
+set search_path         " ./ \
+			../01_RTL                     \
+                        ../04_MEM                      \
+                        /home/process/TN16FFC/IP/CBTK_TSMC16FFC_core_TSMC_v2.0/orig_lib/TSMCHOME/digital/Front_End/timing_power_noise/NLDM/tcbn16ffcllbwp20p90_100a/   \
+                        /usr/cad/synopsys/synthesis/2022.12/libraries/syn/ \
+                        /usr/cad/synopsys/synthesis/cur/dw "
+set target_library      "tcbn16ffcllbwp20p90tt0p8v25c.db"
+set link_library        " * dw_foundation.sldb standard.sldb \
+			tcbn16ffcllbwp20p90tt0p8v25c.db"
+set symbol_library      " *.sdb "
+set synthetic_library   " dw_foundation.sldb"
+
+set verilogout_no_tri true
+set hdlin_enable_presto_for_vhdl "TRUE"
+set sh_enable_line_editing true
+history keep 100
+alias h history

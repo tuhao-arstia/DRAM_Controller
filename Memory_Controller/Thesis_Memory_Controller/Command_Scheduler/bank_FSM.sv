@@ -23,7 +23,8 @@ module bank_FSM(state         ,
                 ba_issue      ,
                 process_cmd   ,
                 bank_refresh_completed,
-                cmd_received_f
+                cmd_received_f,
+                wdata_fifo_full_flag
                 );
 
 input stall ; // Stall signal comes from the cmd_scheduler
@@ -33,6 +34,7 @@ input [`MEM_CTR_COMMAND_BITS-1:0]command;
 input [2:0]number ;
 input rst_n ;
 input clk ;
+input wdata_fifo_full_flag ;
 
 input  [`FSM_WIDTH1-1:0] state ;
 output [`FSM_WIDTH2-1:0] ba_state ;
@@ -74,8 +76,7 @@ logic[`ROW_BITS-1:0] tREF_period_counter;
 
 logic[`ROW_BITS-1:0] tREFI_counter;
 
-
-wire refresh_flag = tREF_period_counter == `CYCLE_REFRESH_PERIOD - 1;
+wire refresh_flag = tREF_period_counter == $unsigned(`CYCLE_REFRESH_PERIOD - 1);
 wire refresh_finished_f = tREFI_counter == 0;
 
 logic refresh_bit_f;
@@ -115,7 +116,7 @@ if(rst_n==0)
   process_cmd <= PROC_NO ;
 else
 	if(receive_command_handshake_f)
-	  process_cmd <= (command_in.r_w == READ)? PROC_READ : PROC_WRITE ;
+	  process_cmd <= (command_buf.r_w == READ)? PROC_READ : PROC_WRITE ;
 	else
 	  if(ba_state == B_ACT_STANDBY)
 	    process_cmd <= PROC_NO ;
@@ -124,13 +125,13 @@ else
 end
 
 
-always@* begin
+always_comb begin
 case(ba_state)
-  B_ACTIVE : ba_addr <= command_buf.row_addr ; //row
-  B_READ   : ba_addr <= command_buf.col_addr ;  //col
-  B_WRITE  : ba_addr <= command_buf.col_addr ;  //col
-  B_PRE    : ba_addr <= 0 ;
-  default   : ba_addr <= 0 ;
+  B_ACTIVE :  ba_addr  = command_buf.row_addr ; //row
+  B_READ   :  ba_addr  = command_buf.col_addr ;  //col
+  B_WRITE  :  ba_addr  = command_buf.col_addr ;  //col
+  B_PRE    :  ba_addr  = 0 ;
+  default   : ba_addr  = 0 ;
 endcase
 end
 
@@ -142,6 +143,10 @@ end
 always@* begin
 if(refresh_flag||refresh_bit_f)
   ba_busy = 1'b1 ;
+else if(wdata_fifo_full_flag)
+begin
+  ba_busy = 1'b1 ;
+end
 else
 begin
   case(ba_state)
@@ -167,17 +172,9 @@ begin
     row_buffer_conflict_flag_ff <= row_buffer_conflict_f;
   else if(ba_state == B_PRE || ba_state == B_PRE_CHECK)
     row_buffer_conflict_flag_ff <= row_buffer_conflict_flag_ff;
-  else 
+  else
     row_buffer_conflict_flag_ff <= 0;
 end
-logic valid_d1;
-always_ff @( posedge clk or negedge rst_n )begin
-  if(~rst_n)
-    valid_d1 <= 0;
-  else
-    valid_d1 <= valid;
-end
-
 
 always@*
 begin
@@ -191,25 +188,17 @@ begin
                    else
                      ba_state_nxt = ba_state ;
 
-   B_ACTIVE   :  
-                if(command_buf.auto_precharge==1'b1)
-                  if(rw==1)
-                    ba_state_nxt = B_READA ;
-                  else
-                    ba_state_nxt = B_WRITEA ;
-                else
+   B_ACTIVE   :
                   if(rw==1)
                     ba_state_nxt = B_READ ;
                   else
                     ba_state_nxt = B_WRITE ;
 
    B_ACT_STANDBY : // Can only receive command in standby mode
-                    if(refresh_flag||refresh_bit_f) //Needs to first precharge before refresh 
+                    if(refresh_flag||refresh_bit_f) //Needs to first precharge before refresh
                       ba_state_nxt = B_PRE;
                     else if(receive_command_handshake_f)
-                         if(command_buf.auto_precharge==1'b1)
-                           ba_state_nxt = (command_buf.r_w == READ) ? B_READA : B_WRITEA ;
-                         else if(row_buffer_hits_f)// Row buffer hits
+                         if(row_buffer_hits_f)// Row buffer hits
 		                       ba_state_nxt = (command_buf.r_w == READ) ? B_READ : B_WRITE ;
 		                     else // Row buffer conflicts, close the row buffer
 		                       ba_state_nxt = B_PRE ;
@@ -220,14 +209,11 @@ begin
    B_READ,
    B_WRITE     : if(command_buf.auto_precharge==1'b1)//auto-precharge on !
                    // Auto-precharge means we simply issue a WRA, or RDA command instead of precharge, but first issue the precharge to ensure the correct execution
-                   ba_state_nxt = B_PRE ; 
+                   ba_state_nxt = B_PRE ;
                  else // Open row policy
                    ba_state_nxt = B_ACT_STANDBY ;
 
-   B_READA,
-   B_WRITEA    : ba_state_nxt = B_IDLE ;
-
-   B_PRE      :  
+   B_PRE      :
               if(refresh_bit_f)
                 ba_state_nxt = B_REFRESH_CHECK;
                 //auto-precharge is on !, Since due to row buffer conflict, we need to precharge and goes to the B_ACT_CHECK state instead of the IDLE state
@@ -244,19 +230,6 @@ begin
   endcase
 end
 
-always_ff @( posedge clk or negedge rst_n )
-begin
-  if(~rst_n)
-    row_is_active_ff <= 0;
-  else
-    if(ba_state == B_ACTIVE)
-      row_is_active_ff <= 1;
-    else if(ba_state == B_PRE)
-      row_is_active_ff <= 0;
-    else
-      row_is_active_ff <= row_is_active_ff;
-end
-
 assign bank_refresh_completed = refresh_finished_f && B_REFRESHING;
 
 always@* begin
@@ -270,11 +243,11 @@ end
 always@(posedge clk)
 begin:REFI_CNT
 if(rst_n == 0)
-  tREFI_counter <= `CYCLE_TO_REFRESH-1 ;
+  tREFI_counter <=$unsigned(`CYCLE_TO_REFRESH-1) ;
 else
   case(ba_state)
-    B_REFRESHING: tREFI_counter <= tREFI_counter - 1;
-    default  : tREFI_counter <= `CYCLE_TO_REFRESH-1;
+    B_REFRESHING: tREFI_counter <= $unsigned(tREFI_counter - 1);
+    default  : tREFI_counter <= $unsigned(`CYCLE_TO_REFRESH-1);
   endcase
 end
 
@@ -300,6 +273,5 @@ begin: REFRESH_BIT
     refresh_bit_f <= refresh_flag ? 1'b1 : refresh_bit_f ;
 end
 
-assign issue_refresh_f = refresh_bit_f;
 
 endmodule

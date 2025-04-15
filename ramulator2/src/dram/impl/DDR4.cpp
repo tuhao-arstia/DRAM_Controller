@@ -79,7 +79,7 @@ class DDR4 : public IDRAM, public Implementation {
       //t_CAS	   t_RAS	    t_RC	  t_RCD	    t_RP	  t_RRD
       // 8	 "	"	14	 "	"	16	 "	"	13	 "	"	4	 "	"	2	 "
       //            name                rate              nBL            nCL            nRCD          nRP        nRAS            nRC         nWR           nRTP          nCWL  nCCDS nCCDL nRRDS nRRDL nWTRS nWTRL nFAW  nRFC nREFI nCS,  tCK_ps
-      {"DDR4_3DDRAM_128",{       1600,         1,         6,             13,          4,         14,              16,      12,       6,          9,   1,    2,   -1,    -1,   2,     4,    -1,   -1,   -1,    2,    1250}},
+      {"DDR4_3DDRAM_128",{       1600,                    1,              6,             13,          4,         14,              16,      12,       6,          9,   1,    2,   -1,    -1,   2,     4,    -1,   -1,   -1,    2,    1250}},
                         //rate    nBL  nCL  nRCD  nRP   nRAS  nRC   nWR  nRTP nCWL nCCD  nRRD  nWTR  nFAW  nRFC nREFI  nCS  tCK_ps
       // The unit is number of tCK_ps, it is 1250 here
       {"DDR4_3DDRAM_512",{1600,   4,   10,   5,   10,    8,   12,   12,    6,   9,   4,  5,   -1,    -1,   2,     6,  -1,   -1,   -1, 2,    1250}}

@@ -1,0 +1,320 @@
+Command: vcs -timescale=1ns/10ps -j4 -sverilog +v2k -full64 -Mupdate -R +define+p2+FSDB \
++define+x16 +define+sg15E +define+MAX_MEM -error=noMPD -debug_access+all -y /usr/cad/synopsys/synthesis/cur/dw/sim_ver/ \
++libext+.v+.inc -f filelist.f -o simv -l vcs.log -P /usr/cad/synopsys/verdi/cur/share/PLI/VCS/LINUX64/novas.tab \
+/usr/cad/synopsys/verdi/cur/share/PLI/VCS/LINUX64/pli.a +define+RTL +notimingchecks \
+
+*** Using c compiler gcc instead of cc ...
+                         Chronologic VCS (TM)
+         Version T-2022.06_Full64 -- Tue Apr  1 19:35:14 2025
+
+                    Copyright (c) 1991 - 2022 Synopsys, Inc.
+   This software and the associated documentation are proprietary to Synopsys,
+ Inc. This software may only be used in accordance with the terms and conditions
+ of a written license agreement with Synopsys, Inc. All other use, reproduction,
+   or distribution of this software is strictly prohibited.  Licensed Products
+     communicate with Synopsys servers for the purpose of providing software
+    updates, detecting software piracy and verifying that customers are using
+    Licensed Products in conformity with the applicable License Key for such
+  Licensed Products. Synopsys will use information gathered in connection with
+    this process to deliver software updates and pursue software pirates and
+                                   infringers.
+
+ Inclusivity & Diversity - Visit SolvNetPlus to read the "Synopsys Statement on
+            Inclusivity and Diversity" (Refer to article 000036315 at
+                        https://solvnetplus.synopsys.com)
+
+Parsing design file '../00_TESTBED/TESTBED.sv'
+Parsing included file 'PATTERN.sv'.
+Parsing included file 'define.sv'.
+Back to file 'PATTERN.sv'.
+Parsing included file 'Usertype.sv'.
+Parsing included file 'define.sv'.
+Back to file 'Usertype.sv'.
+
+Warning-[IDTFE] Implicit data type for enum type is used
+Usertype.sv, 131
+  Base type for the enum type is not specified. VCS will use 'bit' type as its
+  base type.
+
+
+Warning-[IDTFE] Implicit data type for enum type is used
+Usertype.sv, 144
+  Base type for the enum type is not specified. VCS will use 'bit' type as its
+  base type.
+
+Back to file 'PATTERN.sv'.
+Parsing included file 'frontend_cmd_definition_pkg.sv'.
+Parsing included file 'define.sv'.
+Back to file 'frontend_cmd_definition_pkg.sv'.
+Back to file 'PATTERN.sv'.
+Parsing included file '2048Mb_ddr3_parameters.vh'.
+Back to file 'PATTERN.sv'.
+
+Warning-[IPDW] Identifier previously declared
+PATTERN.sv, 413
+  Second declaration for identifier 'command_sent_handshake_f' ignored
+  Identifier 'command_sent_handshake_f' previously declared as wire. 
+  [PATTERN.sv, 389]
+
+Back to file '../00_TESTBED/TESTBED.sv'.
+Parsing included file 'define.sv'.
+Back to file '../00_TESTBED/TESTBED.sv'.
+Parsing included file 'MEM_PAD.sv'.
+Parsing included file 'define.sv'.
+Back to file 'MEM_PAD.sv'.
+Back to file '../00_TESTBED/TESTBED.sv'.
+Parsing included file 'ddr3.sv'.
+Parsing included file '2048Mb_ddr3_parameters.vh'.
+Back to file 'ddr3.sv'.
+Back to file '../00_TESTBED/TESTBED.sv'.
+Parsing included file 'Backend_Controller.sv'.
+Parsing included file 'define.sv'.
+Back to file 'Backend_Controller.sv'.
+Parsing included file 'Ctrl.sv'.
+Parsing included file 'bank_FSM.sv'.
+Parsing included file 'Usertype.sv'.
+Back to file 'bank_FSM.sv'.
+Parsing included file 'define.sv'.
+Back to file 'bank_FSM.sv'.
+
+Warning-[IRIID-W] Inconsistent range in IO declaration
+bank_FSM.sv, 51
+  Range in first declaration for identifier 'ba_state' mismatches with the 
+  range in IO declaration. The first range declaration is ignored
+
+
+Warning-[IRIID-W] Inconsistent range in IO declaration
+bank_FSM.sv, 73
+  Range in first declaration for identifier 'process_cmd' mismatches with the 
+  range in IO declaration. The first range declaration is ignored
+
+Back to file 'Ctrl.sv'.
+Parsing included file 'tP_counter.sv'.
+Parsing included file 'Usertype.sv'.
+Back to file 'tP_counter.sv'.
+
+Warning-[IRIID-W] Inconsistent range in IO declaration
+tP_counter.sv, 54
+  Range in first declaration for identifier 'recode' mismatches with the range
+  in IO declaration. The first range declaration is ignored
+
+Back to file 'Ctrl.sv'.
+Parsing included file 'issue_FIFO.sv'.
+Parsing included file 'Usertype.sv'.
+Back to file 'issue_FIFO.sv'.
+
+Note-[SV-LCM-PPWI] Package previously wildcard imported
+issue_FIFO.sv, 46
+issue_FIFO
+  Package 'usertype' already wildcard imported. 
+  Ignoring usertype::*
+  See the SystemVerilog LRM(1800-2005), section 19.2.1.
+
+Back to file 'Ctrl.sv'.
+Parsing included file 'cmd_scheduler.sv'.
+Parsing included file 'Usertype.sv'.
+Back to file 'cmd_scheduler.sv'.
+Parsing included file 'define.sv'.
+Back to file 'cmd_scheduler.sv'.
+Back to file 'Ctrl.sv'.
+Parsing included file 'wdata_FIFO.sv'.
+Parsing included file 'define.sv'.
+Back to file 'wdata_FIFO.sv'.
+Back to file 'Ctrl.sv'.
+Parsing included file 'define.sv'.
+Back to file 'Ctrl.sv'.
+Parsing included file 'Usertype.sv'.
+Back to file 'Ctrl.sv'.
+Parsing included file 'DW_fifo_s1_df.v'.
+Back to file 'Ctrl.sv'.
+Back to file 'Backend_Controller.sv'.
+Parsing included file 'Usertype.sv'.
+Back to file 'Backend_Controller.sv'.
+Parsing included file 'frontend_cmd_definition_pkg.sv'.
+Back to file 'Backend_Controller.sv'.
+Parsing included file '2048Mb_ddr3_parameters.vh'.
+Back to file 'Backend_Controller.sv'.
+Back to file '../00_TESTBED/TESTBED.sv'.
+Parsing included file '2048Mb_ddr3_parameters.vh'.
+Back to file '../00_TESTBED/TESTBED.sv'.
+Parsing library directory file '/usr/cad/synopsys/synthesis/cur/dw/sim_ver/DW_fifo_s1_sf.v'
+Parsing library directory file '/usr/cad/synopsys/synthesis/cur/dw/sim_ver/DW_fifoctl_s1_df.v'
+Parsing library directory file '/usr/cad/synopsys/synthesis/cur/dw/sim_ver/DW_ram_r_w_s_dff.v'
+Parsing library directory file '/usr/cad/synopsys/synthesis/cur/dw/sim_ver/DW_fifoctl_s1_sf.v'
+Top Level Modules:
+       issue_FIFO
+       counter_compare
+       wdata_FIFO
+       DW_fifo_s1_df
+       TESTBED
+TimeScale is 1 ps / 1 ps
+
+Warning-[TFIPC] Too few instance port connections
+../00_TESTBED/TESTBED.sv, 90
+TESTBED, "Backend_Controller I_BackendController( .power_on_rst_n (power_on_rst_n),  .clk (clk),  .clk2 (clk2),  .o_backend_controller_ready (ba_cmd_pm),  .i_frontend_write_data (write_data),  .i_frontend_command_valid (valid),  .i_frontend_command (command),  .o_backend_read_data (read_data),  .o_backend_read_data_valid (read_data_valid),  .i_backend_controller_stall (1'b0),  .rst_n (ddr3_rst_n),  .cke (ddr3_cke),  .cs_n (ddr3_cs_n),  .ras_n (ddr3_ras_n),  .cas_n (ddr3_cas_n),  .we_n (ddr3_we_n),  .dm_tdqs_in (ddr3_dm_tdqs_in),  .dm_tdqs_out (ddr3_dm_tdqs_out),  .ba (ddr3_ba),  .addr (ddr3_addr),  .data_in (ddr3_data_in),  .data_out (ddr3_data_out),  .data_all_in (ddr3_data_all_in),  .data_all_out (ddr3_data_all_out),  .dqs_in (ddr3_dqs_in),  .dqs_out (ddr3_dqs_ ... "
+  The above instance has fewer port connections than the module definition.
+  Please use '+lint=TFIPC-L' to print out detailed information of unconnected 
+  ports.
+
+
+Warning-[ENUMASSIGN] Illegal assignment to enum variable
+tP_counter.sv, 94
+tP_counter, "recode <= 0;"
+  Only expressions of the enum type can be assigned to an enum variable. 
+  The type int is incompatible with the enum 'recode_state_t'
+  Expression: 0
+  Use the static cast operator to convert the expression to enum type.
+
+
+Warning-[ENUMASSIGN] Illegal assignment to enum variable
+Ctrl.sv, 954
+Ctrl, "tP_recode_state = tP_c0_recode;"
+  Only expressions of the enum type can be assigned to an enum variable. 
+  The type wire [2:0] is incompatible with the enum 'recode_state_t'
+  Expression: tP_c0_recode
+  Use the static cast operator to convert the expression to enum type.
+
+Starting vcs inline pass...
+
+
+Note-[VCS_PARAL] Parallel code-gen enabled
+  VCS is running with parallel code generation(-j)...
+
+16 modules and 0 UDP read.
+recompiling module TESTBED
+recompiling module counter_compare
+recompiling package usertype
+recompiling package frontend_command_definition_pkg
+recompiling package command_definition_pkg
+recompiling module cmd_scheduler
+recompiling module PATTERN
+recompiling module DW_fifo_s1_df
+recompiling module ddr3
+recompiling module bank_FSM
+recompiling module DW_fifoctl_s1_sf
+recompiling module issue_FIFO
+recompiling module DW_fifo_s1_sf_inst
+recompiling module wdata_FIFO
+recompiling module tP_counter
+recompiling module MEM_PAD
+All of 16 modules done
+make[1]: Entering directory `/home/2023_summer/2023train11/Seniors_DDR3/Thesis_Bank_Level_Controller/01_RTL/csrc' \
+
+rm -f _cuarc*.so _csrc*.so pre_vcsobj_*.so share_vcsobj_*.so
+if [ -x ../simv ]; then chmod a-x ../simv; fi
+g++  -o ../simv      -rdynamic  -Wl,-rpath='$ORIGIN'/simv.daidir -Wl,-rpath=./simv.daidir \
+-Wl,-rpath=/usr/cad/synopsys/vcs/2022.06/linux64/lib -L/usr/cad/synopsys/vcs/2022.06/linux64/lib \
+-Wl,-rpath-link=./   objs/amcQw_d.o   _114319_archive_1.so _114329_archive_1.so _114330_archive_1.so \
+_114331_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o \
+rmar_llvm_0_0.o           -lnuma -lvirsim -lerrorinf -lsnpsmalloc -lvfs /usr/cad/synopsys/verdi/cur/share/PLI/VCS/LINUX64/pli.a \
+-lvcsnew -lsimprofile -luclinative /usr/cad/synopsys/vcs/2022.06/linux64/lib/vcs_tls.o \
+-Wl,-whole-archive  -lvcsucli    -Wl,-no-whole-archive        _vcs_pli_stub_.o   \
+/usr/cad/synopsys/vcs/2022.06/linux64/lib/vcs_save_restore_new.o /usr/cad/synopsys/verdi/cur//share/PLI/VCS/LINUX64/pli.a \
+-ldl -lm  -lc -lpthread -ldl 
+../simv up to date
+make[1]: Leaving directory `/home/2023_summer/2023train11/Seniors_DDR3/Thesis_Bank_Level_Controller/01_RTL/csrc' \
+
+Command: /home/2023_summer/2023train11/Seniors_DDR3/Thesis_Bank_Level_Controller/01_RTL/./simv +v2k +define+p2+FSDB +define+x16 +define+sg15E +define+MAX_MEM +libext+.v+.inc -a vcs.log +define+RTL +notimingchecks
+Chronologic VCS simulator copyright 1991-2022
+Contains Synopsys proprietary information.
+Compiler version T-2022.06_Full64; Runtime version T-2022.06_Full64;  Apr  1 19:35 2025
+TESTBED.I0_ddr3.file_io_open: at time                    0 WARNING: no +model_data option specified, using /tmp.
+========================================
+= Start to write the initial data!     =
+========================================
+========================================
+=   Start to read all data to test!    =
+========================================
+*Verdi* Loading libsscore_vcs202206.so
+FSDB Dumper for VCS, Release Verdi_T-2022.06, Linux x86_64/64bit, 05/29/2022
+(C) 1996 - 2022 by Synopsys, Inc.
+*Verdi* : Create FSDB file 'Backend_Controller.fsdb'
+*Verdi* : Begin traversing the scopes, layer (0).
+*Verdi* : Enable +all dumping.
+*Verdi* : End of traversing.
+*Verdi* FSDB: For performance reasons, the Memory Size Limit has been increased to 128M.
+*Verdi* FSDB: For performance reasons, the Memory Size Limit has been increased to 256M.
+*Verdi* FSDB: For performance reasons, the Memory Size Limit has been increased to 512M.
+*Verdi* FSDB: For performance reasons, the Memory Size Limit has been increased to 1024M.
+*Verdi* : Begin traversing the SVA assertions, layer (0).
+*Verdi* : End of traversing the SVA assertions.
+TESTBED.I0_ddr3.reset at time 327001.0 ps WARNING: 200 us is required before RST_N goes inactive.
+TESTBED.I0_ddr3.cmd_task at time 351001.0 ps WARNING: 500 us is required after RST_N goes inactive before CKE goes active.
+mem[ 0][ 0] ACCESS SUCCESS ! 
+mem[ 0][ 1] ACCESS SUCCESS ! 
+mem[ 0][ 2] ACCESS SUCCESS ! 
+mem[ 0][ 3] ACCESS SUCCESS ! 
+mem[ 0][ 4] ACCESS SUCCESS ! 
+mem[ 0][ 5] ACCESS SUCCESS ! 
+mem[ 0][ 6] ACCESS SUCCESS ! 
+mem[ 0][ 7] ACCESS SUCCESS ! 
+mem[ 0][ 8] ACCESS SUCCESS ! 
+mem[ 0][ 9] ACCESS SUCCESS ! 
+mem[ 0][10] ACCESS SUCCESS ! 
+mem[ 0][11] ACCESS SUCCESS ! 
+mem[ 0][12] ACCESS SUCCESS ! 
+mem[ 0][13] ACCESS SUCCESS ! 
+mem[ 0][14] ACCESS SUCCESS ! 
+mem[ 0][15] ACCESS SUCCESS ! 
+mem[ 1][ 0] ACCESS SUCCESS ! 
+mem[ 1][ 1] ACCESS SUCCESS ! 
+mem[ 1][ 2] ACCESS SUCCESS ! 
+mem[ 1][ 3] ACCESS SUCCESS ! 
+mem[ 1][ 4] ACCESS SUCCESS ! 
+mem[ 1][ 5] ACCESS SUCCESS ! 
+mem[ 1][ 6] ACCESS SUCCESS ! 
+mem[ 1][ 7] ACCESS SUCCESS ! 
+mem[ 1][ 8] ACCESS SUCCESS ! 
+mem[ 1][ 9] ACCESS SUCCESS ! 
+mem[ 1][10] ACCESS SUCCESS ! 
+mem[ 1][11] ACCESS SUCCESS ! 
+mem[ 1][12] ACCESS SUCCESS ! 
+mem[ 1][13] ACCESS SUCCESS ! 
+mem[ 1][14] ACCESS SUCCESS ! 
+mem[ 1][15] ACCESS SUCCESS ! 
+mem[ 2][ 0] ACCESS SUCCESS ! 
+mem[ 2][ 1] ACCESS SUCCESS ! 
+mem[ 2][ 2] ACCESS SUCCESS ! 
+mem[ 2][ 3] ACCESS SUCCESS ! 
+mem[ 2][ 4] ACCESS SUCCESS ! 
+mem[ 2][ 5] ACCESS SUCCESS ! 
+mem[ 2][ 6] ACCESS SUCCESS ! 
+mem[ 2][ 7] ACCESS SUCCESS ! 
+mem[ 2][ 8] ACCESS SUCCESS ! 
+mem[ 2][ 9] ACCESS SUCCESS ! 
+mem[ 2][10] ACCESS SUCCESS ! 
+mem[ 2][11] ACCESS SUCCESS ! 
+mem[ 2][12] ACCESS SUCCESS ! 
+mem[ 2][13] ACCESS SUCCESS ! 
+mem[ 2][14] ACCESS SUCCESS ! 
+mem[ 2][15] ACCESS SUCCESS ! 
+mem[ 3][ 0] ACCESS SUCCESS ! 
+mem[ 3][ 1] ACCESS SUCCESS ! 
+mem[ 3][ 2] ACCESS SUCCESS ! 
+mem[ 3][ 3] ACCESS SUCCESS ! 
+mem[ 3][ 4] ACCESS SUCCESS ! 
+mem[ 3][ 5] ACCESS SUCCESS ! 
+mem[ 3][ 6] ACCESS SUCCESS ! 
+mem[ 3][ 7] ACCESS SUCCESS ! 
+mem[ 3][ 8] ACCESS SUCCESS ! 
+mem[ 3][ 9] ACCESS SUCCESS ! 
+mem[ 3][10] ACCESS SUCCESS ! 
+mem[ 3][11] ACCESS SUCCESS ! 
+mem[ 3][12] ACCESS SUCCESS ! 
+mem[ 3][13] ACCESS SUCCESS ! 
+mem[ 3][14] ACCESS SUCCESS ! 
+mem[ 3][15] ACCESS SUCCESS ! 
+ TOTAL design read data:           64
+=====================================
+ TOTAL_ERROR:            0
+=====================================
+Read data count:          64
+Total read data count:          64
+Total Memory Simulation cycles:                596
+$finish called from file "PATTERN.sv", line 361.
+$finish at simulation time 4270500.0 ps
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 4270500 ps
+CPU Time:      5.800 seconds;       Data structure size: 512.3Mb
+Tue Apr  1 19:35:24 2025
+CPU time: 1.996 seconds to compile + .518 seconds to elab + .483 seconds to link + 6.028 seconds in simulation

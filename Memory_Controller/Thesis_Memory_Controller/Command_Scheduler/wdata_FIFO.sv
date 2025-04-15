@@ -104,7 +104,7 @@ else
 end
 
 always@* begin
-    write_en = wen ;
+  write_en = wen ;
 end
 
 always@* begin
@@ -115,7 +115,7 @@ else
 end
 
 always@* begin
-empty = (read_counter == write_counter) ? 1 : 0 ;
+  empty = (read_counter == write_counter) ? 1'b1 : 1'b0 ;
 end
 
 always@* begin

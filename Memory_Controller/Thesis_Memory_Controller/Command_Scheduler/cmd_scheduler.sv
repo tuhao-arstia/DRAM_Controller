@@ -65,12 +65,6 @@ always_comb begin :BANKS_STATE
   ba0_state = ba0_info_in.bank_state;
 end
 
-process_cmd_t ba0_proc;
-
-always_comb begin : BANKS_PROC
-  ba0_proc = ba0_info_in.proc_cmd;
-end
-
 
 reg act_pri;
 reg read_pri;
@@ -84,7 +78,7 @@ wire [`B_COUNTER_WIDTH-1:0]b0_counter;
 reg [`B_COUNTER_WIDTH-1:0] b0_c_counter;
 
 
-wire pre0_threshold = (b0_c_counter > 16) ? 1 : 0 ;
+wire pre0_threshold = (b0_counter > $unsigned(16)) ? 1'b1 : 1'b0 ;
 
 bx_counter     b0(.ba_state  (ba0_state),
                   .clk       (clk),
@@ -128,8 +122,8 @@ else
      read_count <=  read_count ;
 end
 
-always@(posedge clk) begin // Counts to 4
-if(rst_n==0)
+always@(posedge clk or negedge rst_n) begin // Counts to 4
+if(~rst_n)
   write_count <= 0 ;
 else
   if(have_cmd_write)
@@ -140,8 +134,8 @@ else
      write_count <= write_count ;
 end
 
-always@(posedge clk) begin // Counts to 3
-if(rst_n==0)
+always@(posedge clk or negedge rst_n) begin // Counts to 3
+if(~rst_n)
     pre_count <= 0 ;
 else
   if(have_cmd_pre)
@@ -151,14 +145,14 @@ else
 end
 
 
-always@* begin: SCH_ADDR_ISSUE_BLOCK
+always_comb begin: SCH_ADDR_ISSUE_BLOCK
 if(ba0_state == B_ACTIVE || ba0_state == B_READ || ba0_state == B_WRITE || ba0_state == B_PRE || ba0_state == B_REFRESH_CHECK)
   {f_ba_state,sch_addr,sch_bank,sch_issue} = {ba0_info_in.bank_state,ba0_info_in.addr,3'd0,1'b1} ;
 else
   {f_ba_state,sch_addr,sch_bank,sch_issue} = {ba0_info_in.bank_state,ba0_info_in.addr,3'd0,1'b0} ;
 end
 
-always@* begin
+always_comb begin
 if(write_count != 0 && read_count == 0)
   current_rw = WRITE ; //continuous write
 else if(write_count == 0 && read_count != 0)
@@ -167,17 +161,18 @@ else
   current_rw = WRITE ;
 end
 
-always@* begin: SCH_BA_CMD_DECODER
+always_comb begin: SCH_BA_CMD_DECODER
+sch_command = ATCMD_NOP ;
 case(f_ba_state)
-  B_ACTIVE : sch_command <= ATCMD_ACTIVE ;
-  B_READ   : sch_command <= ATCMD_READ ;
-  B_WRITE  : sch_command <= ATCMD_WRITE ;
-  B_PRE    : sch_command <= ATCMD_PRECHARGE ;
+  B_ACTIVE : sch_command = ATCMD_ACTIVE ;
+  B_READ   : sch_command = ATCMD_READ ;
+  B_WRITE  : sch_command = ATCMD_WRITE ;
+  B_PRE    : sch_command = ATCMD_PRECHARGE ;
   // Add auto-precharge commands
-  B_READA  : sch_command <= ATCMD_RDA ;
-  B_WRITEA : sch_command <= ATCMD_WRA ;
-  B_REFRESH_CHECK: sch_command <= ATCMD_REFRESH ;
-  default   : sch_command <= ATCMD_NOP ;
+  B_READA  : sch_command = ATCMD_RDA ;
+  B_WRITEA : sch_command = ATCMD_WRA ;
+  B_REFRESH_CHECK: sch_command = ATCMD_REFRESH ;
+  default   : sch_command = ATCMD_NOP ;
 endcase
 end
 
@@ -212,8 +207,13 @@ wire have_pre = have_pre_c || have_pre_a ;
 // This determines which dram bank cmds to schedule, due to the fact that a sequences of
 // cmds must be scheduled in a certain order, the priority of the cmds must be determined
 always@* begin: CMD_AUTHORIZE_BLOCK
+  act_pri = 1'b0 ;
+  write_pri = 1'b0 ;
+  read_pri = 1'b0 ;
+  pre_pri = 1'b0 ;
+
 case( {have_act,have_write,have_read,have_pre} )
-  4'b0000 :{act_pri,write_pri,read_pri,pre_pri} = 0 ;
+  4'b0000 :{act_pri,write_pri,read_pri,pre_pri} = 4'b0000 ;
   4'b0001 :{act_pri,write_pri,read_pri,pre_pri} = 4'b0001 ;
   4'b0010 :{act_pri,write_pri,read_pri,pre_pri} = 4'b0010 ;
 
@@ -224,11 +224,8 @@ case( {have_act,have_write,have_read,have_pre} )
              {act_pri,write_pri,read_pri,pre_pri} = 4'b0001 ;
            else
 	           if(pre0_threshold)
-
 	             {act_pri,write_pri,read_pri,pre_pri} = 4'b0001 ;
-
 	           else
-
 	             {act_pri,write_pri,read_pri,pre_pri} = 4'b0100 ;
 
   4'b1000 :{act_pri,write_pri,read_pri,pre_pri} = 4'b1000 ;
@@ -340,6 +337,7 @@ end
 // wire b0_big,b1_big,b2_big,b3_big;
 
 always@* begin
+  b0_c_counter = 0 ;
 if(act_pri==1) begin
   b0_c_counter = (ba0_state==B_ACT_CHECK || ba0_state==B_ACTIVE) ? b0_counter : 0 ;
 end
@@ -355,7 +353,6 @@ end
 else begin
   b0_c_counter =  b0_counter ;
 end
-
 end
 
 // Why do we need stall signals? Only one bank can be granted at a time
@@ -378,7 +375,6 @@ if(isu_fifo_full==0)
 else begin
 	ba0_stall = 1 ;
 end
-
 end
 
 endmodule
@@ -420,8 +416,8 @@ end
 
 reg [`B_COUNTER_WIDTH-1:0]b_counter ;
 
-always@(posedge clk) begin
-  if(rst_n==0)
+always@(posedge clk or negedge rst_n) begin
+  if(~rst_n)
     b_counter <= 0 ;
   else
     case(ba_state_i)
@@ -431,7 +427,6 @@ always@(posedge clk) begin
       B_READ_CHECK  : b_counter <= b_counter + 1 ;
       B_PRE_CHECK   : b_counter <= b_counter + 1 ;
       B_ACTIVE      : b_counter <= b_counter + 1 ;
-
       B_READ,
       B_WRITE,
       B_PRE         : b_counter <= b_counter + 1 ;

@@ -1436,13 +1436,15 @@ module ddr3 (
                             $display ("%m: at time %t ERROR: %s Failure.  Illegal burst interruption.", $time, cmd_string[cmd]);
                             if (STOP_ON_ERROR) $stop(0);
                         end else begin
-                            if (addr[AP]) begin
-                                auto_precharge_bank = 1'b1;
-                                write_precharge_bank = 1'b1;
-                            end
+                            // if (addr[AP]) begin
+                            //     auto_precharge_bank = 1'b1;
+                            //     write_precharge_bank = 1'b1;
+                            // end
 
                             // The place where column address of write is being counted
-                            col = {addr[BC-1:AP+1], addr[AP-1:0]}; // assume BC > AP
+                            // col = {addr[BC-1:AP+1], addr[AP-1:0]}; // assume BC > AP
+                            col = addr;
+                            
                             if (col >= 1<<COL_BITS) begin
                                 $display ("%m: at time %t WARNING: col = %h does not exist.  Maximum col = %h", $time, col, (1<<COL_BITS)-1);
                             end
@@ -1499,11 +1501,12 @@ module ddr3 (
                             $display ("%m: at time %t ERROR: %s Failure.  Illegal burst interruption.", $time, cmd_string[cmd]);
                             if (STOP_ON_ERROR) $stop(0);
                         end else begin
-                            if (addr[AP] && !mpr_en) begin
-                                auto_precharge_bank = 1'b1;
-                                read_precharge_bank = 1'b1;
-                            end
-                            col = {addr[BC-1:AP+1], addr[AP-1:0]}; // assume BC > AP
+                            // if (addr[AP] && !mpr_en) begin
+                            //     auto_precharge_bank = 1'b1;
+                            //     read_precharge_bank = 1'b1;
+                            // end
+                            // col = {addr[BC-1:AP+1], addr[AP-1:0]}; // assume BC > AP
+                            col = addr;
                             if (col >= 1<<COL_BITS) begin
                                 $display ("%m: at time %t WARNING: col = %h does not exist.  Maximum col = %h", $time, col, (1<<COL_BITS)-1);
                             end
